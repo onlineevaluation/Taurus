@@ -1,1 +1,57 @@
-这是{{ classId }}班级仪表盘
+<nz-dropdown>
+  <a nz-dropdown> {{ selected }} <i nz-icon type="down"></i> </a>
+  <ul nz-menu nzSelectable>
+    <li
+      nz-menu-item
+      *ngFor="let item of menuitems"
+      (click)="selectChange(item)"
+    >
+      {{ item }}
+    </li>
+  </ul>
+</nz-dropdown>
+
+<div class="score-charts">
+  <div id="c1"></div>
+
+  <div class="ranking">
+    成绩排名(前十名)
+    <span>查看所有</span>
+    <nz-list
+      [nzDataSource]="listData"
+      [nzRenderItem]="item"
+      [nzItemLayout]="'horizontal'"
+      [nzLoading]="loading"
+    >
+      <ng-template #item let-item>
+        <nz-list-item>
+          <nz-list-item-meta [nzTitle]="nzTitle">
+            <ng-template #nzTitle>
+              <ng-container *ngIf="item.index <= 3; else elseTemplate">
+                <div class="number number-active">{{ item.index }}</div>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <div class="number">{{ item.index }}</div>
+              </ng-template>
+              {{ item.studentNumber }}/{{ item.studentName }}
+            </ng-template>
+          </nz-list-item-meta>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </div>
+</div>
+
+<!-- 词云 -->
+
+<div class="other-info">
+  <!-- 及格率 -->
+  <div class="passed">
+    <div id="gauge"></div>
+  </div>
+  <div class="other">2</div>
+</div>
+
+<div class="student-table">
+  <app-student-table></app-student-table>
+</div>
