@@ -23,6 +23,11 @@ const routes: Routes = [
         path: 'dashboard',
         loadChildren: '../dashboard/dashboard.module#DashboardModule',
       },
+      {
+        path: 'page-management',
+        loadChildren:
+          '../page-management/page-management.module#PageManagementModule',
+      },
     ],
   },
 ];

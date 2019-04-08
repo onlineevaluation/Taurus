@@ -1,0 +1,41 @@
+<button nz-button nzType="default" (click)="generatePaper(false)">
+  手动组卷
+</button>
+<button nz-button nzType="default" (click)="generatePaper(true)">
+  自动组卷
+</button>
+
+<span [ngSwitch]="isAuto">
+  <p *ngSwitchCase="true">1</p>
+  <p *ngSwitchCase="false">
+    <!-- 试题列表 -->
+    <span [ngSwitch]="type">
+      <p *ngSwitchCase="1">
+        <nz-collapse [nzBordered]="false">
+          <nz-collapse-panel
+            *ngFor="let panel of panels"
+            [nzHeader]="panel.name"
+            [nzActive]="panel.active"
+          >
+            <p>{{ panel.name }} content</p>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </p>
+      <p *ngSwitchCase="2">
+        <nz-collapse [nzBordered]="false">
+          <nz-collapse-panel
+            *ngFor="let panel of panels"
+            [nzHeader]="panel.name"
+            [nzActive]="panel.active"
+          >
+            <p>{{ panel.name }} content</p>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </p>
+      <p *ngSwitchDefault>3</p>
+    </span>
+  </p>
+  <p *ngSwitchDefault>
+    请选择组卷方式
+  </p>
+</span>

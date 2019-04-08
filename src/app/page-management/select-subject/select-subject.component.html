@@ -1,0 +1,42 @@
+<form [formGroup]="firstGroup">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="teacherName">
+      教师姓名
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        nz-input
+        formControlName="teacherNameController"
+        id="teacherName"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzSm="6" nzXs="24" nzRequired nzFor="subject"
+      >选择科目</nz-form-label
+    >
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        id="subject"
+        nzAllowClear
+        formControlName="subjectController"
+        nzPlaceHolder="Choose"
+      >
+        <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+        <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzSm="6" nzXs="24" nzRequired nzFor="type"
+      >题型</nz-form-label
+    >
+    <nz-form-control nzSpan="1-24">
+      <nz-checkbox-group
+        formControlName="typeController"
+        (ngModelChange)="log(checkOptionsOne)"
+      ></nz-checkbox-group>
+    </nz-form-control>
+  </nz-form-item>
+</form>

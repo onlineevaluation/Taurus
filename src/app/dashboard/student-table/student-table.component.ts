@@ -20,22 +20,22 @@ export class StudentTableComponent implements OnInit {
   }> = [
     {
       name: 'John Brown',
-      number: '1',
+      number: '1514010631',
       score: 83,
     },
     {
       name: 'Jim Green',
-      number: '1',
+      number: '1514030211',
       score: 67,
     },
     {
       name: 'Joe Black',
-      number: '1',
+      number: '1513010631',
       score: 78,
     },
     {
       name: 'Jim Red',
-      number: '1',
+      number: '15632032',
       score: 80,
     },
   ];
@@ -46,9 +46,4 @@ export class StudentTableComponent implements OnInit {
     address: string;
     [key: string]: string | number;
   }> = [];
-
-  sort(sort: { key: string; value: string }): void {
-    this.sortName = sort.key;
-    this.sortValue = sort.value;
-  }
 }

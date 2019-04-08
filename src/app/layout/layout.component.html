@@ -12,15 +12,11 @@
       [nzMode]="'inline'"
       [nzInlineCollapsed]="isCollapsed"
     >
-      <li nz-submenu>
-        <span title
-          ><i nz-icon type="user"></i><span class="nav-text">班级</span></span
-        >
-        <ul>
-          <li nz-menu-item>Tom</li>
-          <li nz-menu-item>Bill</li>
-          <li nz-menu-item>Alex</li>
-        </ul>
+      <li nz-submenu (click)="toRouter('home')">
+        <span title>
+          <i nz-icon type="user"></i>
+          <span class="nav-text">班级</span>
+        </span>
       </li>
       <li nz-submenu>
         <span title
@@ -28,7 +24,9 @@
           ><span class="nav-text">试卷管理</span></span
         >
         <ul>
-          <li nz-menu-item>查看试卷</li>
+          <li nz-menu-item (click)="toRouter('page-management')">
+            查看试卷
+          </li>
           <li nz-menu-item>合并试卷</li>
         </ul>
       </li>
