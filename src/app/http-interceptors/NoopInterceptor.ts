@@ -50,12 +50,10 @@ export class NoopInterceptor implements HttpInterceptor {
           switch (error.status) {
             case 403:
               // 登录错误，返回
-              console.log('403了');
               localStorage.clear();
               this.router.navigateByUrl('/login');
               break;
           }
-          console.log('拦截器的error', error);
         },
       ),
     );

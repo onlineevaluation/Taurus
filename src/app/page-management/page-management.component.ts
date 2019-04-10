@@ -23,9 +23,7 @@ export class PageManagementComponent implements OnInit {
     this.changeContent();
   }
 
-  done(): void {
-    console.log('done');
-  }
+  done(): void {}
 
   changeContent(): void {
     switch (this.current) {

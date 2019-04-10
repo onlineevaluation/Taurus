@@ -37,6 +37,5 @@ export class SelectTitleComponent implements OnInit {
 
   generatePaper(bool: boolean) {
     this.isAuto = bool;
-    console.log(this.type);
   }
 }

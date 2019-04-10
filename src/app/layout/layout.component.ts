@@ -20,7 +20,6 @@ export class LayoutComponent implements OnInit {
         this.router.navigateByUrl('home');
         break;
       case 'page-management':
-        console.log('ssssssss');
         this.router.navigateByUrl('page-management');
         break;
     }

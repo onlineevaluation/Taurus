@@ -13,4 +13,8 @@ export class JwtUser {
    * 班级id
    */
   classId: number;
+  /**
+   * 权限
+   */
+  roles: Array<string> = [];
 }

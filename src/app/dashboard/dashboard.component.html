@@ -6,7 +6,7 @@
       *ngFor="let item of menuitems"
       (click)="selectChange(item)"
     >
-      {{ item }}
+      {{ item.title }}
     </li>
   </ul>
 </nz-dropdown>
@@ -18,7 +18,7 @@
     成绩排名(前十名)
     <span>查看所有</span>
     <nz-list
-      [nzDataSource]="listData"
+      [nzDataSource]="top10List"
       [nzRenderItem]="item"
       [nzItemLayout]="'horizontal'"
       [nzLoading]="loading"
@@ -33,7 +33,7 @@
               <ng-template #elseTemplate>
                 <div class="number">{{ item.index }}</div>
               </ng-template>
-              {{ item.studentNumber }}/{{ item.studentName }}
+              {{ item.studentNumber }}/{{ item.studentName }} | {{ item.score }}
             </ng-template>
           </nz-list-item-meta>
         </nz-list-item>

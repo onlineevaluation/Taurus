@@ -12,5 +12,5 @@ export class ClassInfo {
   /**
    * 班级人数
    */
-  members: number;
+  membersCount: number;
 }

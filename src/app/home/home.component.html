@@ -12,17 +12,20 @@
 
   <nz-row [nzGutter]="16" class="student-statistic">
     <nz-col [nzSpan]="8">
-      <nz-statistic [nzValue]="3 | number" [nzTitle]="'班级'"></nz-statistic>
+      <nz-statistic
+        [nzValue]="classList.length | number"
+        [nzTitle]="'班级'"
+      ></nz-statistic>
     </nz-col>
     <nz-col [nzSpan]="8">
       <nz-statistic
-        [nzValue]="85 | number"
+        [nzValue]="classmemberCount | number"
         [nzTitle]="'平均成绩'"
       ></nz-statistic>
     </nz-col>
     <nz-col [nzSpan]="8">
       <nz-statistic
-        [nzValue]="213 | number: '1.0-2'"
+        [nzValue]="classmemberCount | number: '1.0-2'"
         [nzTitle]="'学生总数'"
       ></nz-statistic>
     </nz-col>
@@ -38,7 +41,7 @@
       (click)="toDashBoard(item.classId)"
     >
       <div>{{ item.classNumber }}</div>
-      <p>班级人数: {{ item.members }}</p>
+      <p>班级人数: {{ item.membersCount }}</p>
     </div>
   </nz-card>
 </div>

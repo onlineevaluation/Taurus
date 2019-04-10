@@ -21,6 +21,6 @@ import { httpInterceptorProviders } from '../http-interceptors';
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
 })
 export class SharedModule {}

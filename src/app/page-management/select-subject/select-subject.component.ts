@@ -18,9 +18,7 @@ export class SelectSubjectComponent implements OnInit {
     { label: '简答题', value: 'answer' },
   ];
 
-  log(value: object[]): void {
-    console.log(value);
-  }
+  log(value: object[]): void {}
 
   ngOnInit(): void {
     this.firstGroup = new FormGroup({

@@ -15,6 +15,7 @@ export const authInfo = () => {
     jwtUser.sub = user.sub;
     jwtUser.classId = user.classId;
     jwtUser.userId = user.userId;
+    jwtUser.roles = user.roles;
   } else {
     jwtUser.userId = -1;
   }

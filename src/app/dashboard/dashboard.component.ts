@@ -3,7 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 // import { single } from '../data';
 import G2 from '@antv/g2/build/g2';
-import { View } from '@antv/data-set';
+import { DashboardService } from './dashboard.service';
+import { Result } from '../entity/Result';
+import { map } from 'rxjs/operators';
+import { TeacherInfo } from '../entity/TeacherInfo';
+import { ExamInfo, Top10Info } from '../entity/Info';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,45 +16,22 @@ import { View } from '@antv/data-set';
 })
 export class DashboardComponent implements OnInit {
   title = 'app';
-
+  teacherInfo: TeacherInfo;
   data = {};
   chart;
 
   graph;
 
-  listData = [
-    {
-      studentNumber: '1514010101',
-      studentName: '杨晓辉',
-      index: 1,
-    },
+  top10List: Array<Top10Info> = [];
 
-    {
-      studentNumber: '1514010102',
-      studentName: '杨辉',
-      index: 2,
-    },
-
-    {
-      studentNumber: '1514010103',
-      studentName: '杨晓',
-      index: 3,
-    },
-
-    {
-      studentNumber: '1514010104',
-      studentName: '晓辉',
-      index: 4,
-    },
-  ];
-
-  constructor(private routeInfo: ActivatedRoute) {
-    // Object.assign(this, { single });
-  }
+  constructor(
+    private routeInfo: ActivatedRoute,
+    private dashboardService: DashboardService,
+  ) {}
 
   classId: number;
   selected: string;
-  menuitems: Array<string> = [];
+  menuitems: Array<ExamInfo> = [];
   chartData() {
     this.data = [
       {
@@ -111,8 +92,8 @@ export class DashboardComponent implements OnInit {
 
     this.chart = new G2.Chart({
       container: 'c1', // 指定图表容器 ID
-      width: 800, // 指定图表宽度
-      height: 300, // 指定图表高度
+      width: 700, // 指定图表宽度
+      height: 400, // 指定图表高度
     });
 
     // word cloud
@@ -124,21 +105,39 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    const profileJson = localStorage.getItem('profile');
+    this.teacherInfo = JSON.parse(profileJson);
     this.chartData();
     this.renderGauge();
     this.routeInfo.params.subscribe((params: Params) => {
       this.classId = params['classId'];
     });
-
-    this.menuitems.push('面向对象Java周考一');
-    this.menuitems.push('面向对象Java周考二');
-    this.menuitems.push('面向对象Java周考三');
-    this.menuitems.push('面向对象Java周考四');
-    this.selected = this.menuitems[0];
+    this.dashboardService
+      .getClassAllExamPage(this.classId)
+      .pipe(
+        map((result: Result) => {
+          console.log('result is ', result);
+          result.data.forEach((element: ExamInfo) => {
+            let examInfo = new ExamInfo();
+            examInfo = element;
+            this.menuitems.push(examInfo);
+          });
+          console.log(this.menuitems);
+          this.selected = this.menuitems[0].title;
+          // 发起获取其他的请求
+          this.getPageInfo(
+            this.menuitems[0].pagesId,
+            this.menuitems[0].classId,
+            this.teacherInfo.identity,
+          );
+        }),
+      )
+      .subscribe();
   }
 
-  selectChange(item: string) {
-    this.selected = item;
+  selectChange(item: ExamInfo) {
+    this.selected = item.title;
+    this.getPageInfo(item.pagesId, item.classId, this.teacherInfo.identity);
   }
 
   private renderGauge() {
@@ -267,5 +266,16 @@ export class DashboardComponent implements OnInit {
     });
 
     c.render();
+  }
+
+  private getPageInfo(pageId: number, classId: number, teacherId: number) {
+    this.dashboardService.getTop10Student(pageId, classId, teacherId).subscribe(
+      (result: Result) => {
+        this.top10List = result.data;
+      },
+      error => {
+        console.log('error ', error);
+      },
+    );
   }
 }

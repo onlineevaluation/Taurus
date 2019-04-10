@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
 import { User } from '../entity/User';
+import { Router } from '@angular/router';
+import { authInfo } from '../utils/auth.util';
 
 @Component({
   selector: 'app-login',
@@ -11,12 +13,16 @@ import { User } from '../entity/User';
 export class LoginComponent implements OnInit {
   validateForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private loginService: LoginService) {}
+  constructor(
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private router: Router,
+  ) {
+  }
 
   submitForm(): void {
-    const l = this.validateForm.controls['username'].value;
-
-    console.log('l is ', l);
+    const username = this.validateForm.get('userName').value;
+    const password = this.validateForm.get('password').value;
 
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
@@ -24,8 +30,22 @@ export class LoginComponent implements OnInit {
     }
 
     const user = new User();
+    user.username = username;
+    user.password = password;
 
-    // this.loginService.doLogin();
+    this.loginService.doLogin(user).subscribe(
+      (bool: boolean) => {
+        if (bool) {
+          if (authInfo().roles.indexOf('teacher') != -1) {
+            this.loginService.getProfile();
+            this.router.navigateByUrl('/');
+          }
+        } else {
+        }
+      },
+      (error: Error) => {
+      },
+    );
   }
 
   ngOnInit(): void {
