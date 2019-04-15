@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren:
           '../page-management/page-management.module#PageManagementModule',
       },
+      {
+        path: 'student-page',
+        loadChildren: '../student-page/student-page.module#StudentPageModule',
+      },
     ],
   },
 ];

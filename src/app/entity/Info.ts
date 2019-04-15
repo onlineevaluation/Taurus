@@ -12,7 +12,7 @@ export class ExamInfo {
  * @param pageId 试卷id
  * @param score 分数
  */
-export class Top10Info {
+export class StudentAndScoreInfo {
   index: number;
   pageId: number;
   score: number;

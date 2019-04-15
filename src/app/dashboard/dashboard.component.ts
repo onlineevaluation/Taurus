@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ActivatedRoute, Params } from '@angular/router';
-// import { single } from '../data';
 import G2 from '@antv/g2/build/g2';
 import { DashboardService } from './dashboard.service';
 import { Result } from '../entity/Result';
 import { map } from 'rxjs/operators';
 import { TeacherInfo } from '../entity/TeacherInfo';
-import { ExamInfo, Top10Info } from '../entity/Info';
+import { ExamInfo, StudentAndScoreInfo } from '../entity/Info';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,12 +15,12 @@ import { ExamInfo, Top10Info } from '../entity/Info';
 export class DashboardComponent implements OnInit {
   title = 'app';
   teacherInfo: TeacherInfo;
-  data = {};
+  data = [];
   chart;
-
   graph;
-
-  top10List: Array<Top10Info> = [];
+  passedRate: number;
+  top10List: Array<StudentAndScoreInfo> = [];
+  studentScoreTableList: Array<StudentAndScoreInfo> = [];
 
   constructor(
     private routeInfo: ActivatedRoute,
@@ -32,83 +30,26 @@ export class DashboardComponent implements OnInit {
   classId: number;
   selected: string;
   menuitems: Array<ExamInfo> = [];
-  chartData() {
-    this.data = [
-      {
-        score: 0,
-        count: 0,
-      },
 
-      {
-        score: 10,
-        count: 6,
-      },
+  /**
+   * 柱状图渲染
+   */
+  renderBarChart() {
+    this.chart.source(this.data);
+    this.chart.interval().position('分数范围*人数');
+    //  渲染图表
+    this.chart.render();
+  }
 
-      {
-        score: 20,
-        count: 13,
-      },
-
-      {
-        score: 30,
-        count: 2,
-      },
-
-      {
-        score: 40,
-        count: 5,
-      },
-
-      {
-        score: 50,
-        count: 2,
-      },
-
-      {
-        score: 60,
-        count: 10,
-      },
-
-      {
-        score: 70,
-        count: 40,
-      },
-
-      {
-        score: 80,
-        count: 50,
-      },
-
-      {
-        score: 90,
-        count: 67,
-      },
-
-      {
-        score: 100,
-        count: 2,
-      },
-    ];
-
+  ngOnInit() {
     this.chart = new G2.Chart({
       container: 'c1', // 指定图表容器 ID
       width: 700, // 指定图表宽度
       height: 400, // 指定图表高度
     });
 
-    // word cloud
-
-    this.chart.source(this.data);
-    this.chart.interval().position('score*count');
-    //  渲染图表
-    this.chart.render();
-  }
-
-  ngOnInit() {
     const profileJson = localStorage.getItem('profile');
     this.teacherInfo = JSON.parse(profileJson);
-    this.chartData();
-    this.renderGauge();
     this.routeInfo.params.subscribe((params: Params) => {
       this.classId = params['classId'];
     });
@@ -116,7 +57,6 @@ export class DashboardComponent implements OnInit {
       .getClassAllExamPage(this.classId)
       .pipe(
         map((result: Result) => {
-          console.log('result is ', result);
           result.data.forEach((element: ExamInfo) => {
             let examInfo = new ExamInfo();
             examInfo = element;
@@ -130,6 +70,18 @@ export class DashboardComponent implements OnInit {
             this.menuitems[0].classId,
             this.teacherInfo.identity,
           );
+          this.getScoreAnalytics(
+            this.menuitems[0].classId,
+            this.menuitems[0].pagesId,
+          );
+          this.getPassedData(
+            this.menuitems[0].classId,
+            this.menuitems[0].pagesId,
+          );
+          this.getClassmateScore(
+            this.menuitems[0].classId,
+            this.menuitems[0].pagesId,
+          );
         }),
       )
       .subscribe();
@@ -138,144 +90,69 @@ export class DashboardComponent implements OnInit {
   selectChange(item: ExamInfo) {
     this.selected = item.title;
     this.getPageInfo(item.pagesId, item.classId, this.teacherInfo.identity);
-  }
-
-  private renderGauge() {
-    var Shape = G2.Shape;
-
-    Shape.registerShape('point', 'pointer', {
-      drawShape: function drawShape(cfg, group) {
-        var center = this.parsePoint({
-          // 获取极坐标系下画布中心点
-          x: 0,
-          y: 0,
-        });
-        // 绘制指针
-        group.addShape('line', {
-          attrs: {
-            x1: center.x,
-            y1: center.y,
-            x2: cfg.x,
-            y2: cfg.y,
-            stroke: cfg.color,
-            lineWidth: 5,
-            lineCap: 'round',
-          },
-        });
-        return group.addShape('circle', {
-          attrs: {
-            x: center.x,
-            y: center.y,
-            r: 9.75,
-            stroke: cfg.color,
-            lineWidth: 4.5,
-            fill: '#fff',
-          },
-        });
-      },
-    });
-
-    var d = [
-      {
-        value: 8.6,
-      },
-    ];
-    var c = new G2.Chart({
-      container: 'gauge',
-      forceFit: true,
-      height: 300,
-      padding: [0, 0, 30, 0],
-    });
-    c.source(d);
-    c.coord('polar', {
-      startAngle: (-9 / 8) * Math.PI,
-      endAngle: (1 / 8) * Math.PI,
-      radius: 0.75,
-    });
-    c.scale('value', {
-      min: 0,
-      max: 9,
-      tickInterval: 1,
-      nice: false,
-    });
-
-    c.axis('1', false);
-    c.axis('value', {
-      zIndex: 2,
-      line: null,
-      label: {
-        offset: -16,
-        textStyle: {
-          fontSize: 18,
-          textAlign: 'center',
-          textBaseline: 'middle',
-        },
-      },
-      subTickCount: 4,
-      subTickLine: {
-        length: -8,
-        stroke: '#fff',
-        strokeOpacity: 1,
-      },
-      tickLine: {
-        length: -17,
-        stroke: '#fff',
-        strokeOpacity: 1,
-      },
-      grid: null,
-    });
-    c.legend(false);
-    c.point()
-      .position('value*1')
-      .shape('pointer')
-      .color('#1890FF')
-      .active(false);
-
-    // 绘制仪表盘背景
-    c.guide().arc({
-      zIndex: 0,
-      top: false,
-      start: [0, 0.945],
-      end: [9, 0.945],
-      style: {
-        // 底灰色
-        stroke: '#CBCBCB',
-        lineWidth: 18,
-      },
-    });
-    // 绘制指标
-    c.guide().arc({
-      zIndex: 1,
-      start: [0, 0.945],
-      end: [d[0].value, 0.945],
-      style: {
-        stroke: '#1890FF',
-        lineWidth: 18,
-      },
-    });
-    // 绘制指标数字
-    c.guide().html({
-      position: ['50%', '95%'],
-      html:
-        '<div style="width: 300px;text-align: center;">' +
-        '<p style="font-size: 20px; color: #545454;margin: 0;">及格率</p>' +
-        '<p style="font-size: 24px;color: #545454;margin: 0;">' +
-        d[0].value * 10 +
-        '%</p>' +
-        '</div>',
-    });
-
-    c.render();
+    this.getScoreAnalytics(item.classId, item.pagesId);
+    this.getPassedData(item.classId, item.pagesId);
+    this.getClassmateScore(item.classId, item.pagesId);
   }
 
   private getPageInfo(pageId: number, classId: number, teacherId: number) {
     this.dashboardService.getTop10Student(pageId, classId, teacherId).subscribe(
       (result: Result) => {
+        console.log('top list ', result.data);
         this.top10List = result.data;
       },
       error => {
         console.log('error ', error);
       },
     );
+  }
+
+  private getScoreAnalytics(classId: number, pageId: number) {
+    this.data = [];
+    this.dashboardService
+      .getScoreAnalytics(classId, pageId)
+      .pipe(
+        map((result: Result) => {
+          const item = result.data;
+          if (item['50'] != null || item['50'] !== undefined) {
+            this.data.push({ 人数: item['50'].length, 分数范围: '<60' });
+          }
+          if (item['60'] != null || item['60'] !== undefined) {
+            this.data.push({ 人数: item['60'].length, 分数范围: '60~70' });
+          }
+          if (item['70'] != null || item['70'] !== undefined) {
+            this.data.push({ 人数: item['70'].length, 分数范围: '70~80' });
+          }
+          if (item['80'] != null || item['80'] !== undefined) {
+            this.data.push({ 人数: item['80'].length, 分数范围: '80~90' });
+          }
+          if (item['90'] != null || item['90'] !== undefined) {
+            this.data.push({ 人数: item['90'].length, 分数范围: `90~99` });
+          }
+          if (item['100'] != null || item['100'] !== undefined) {
+            this.data.push({ 人数: item['100'].length, 分数范围: '100' });
+          }
+          this.renderBarChart();
+        }),
+      )
+      .subscribe();
+  }
+
+  private getPassedData(classId: number, pageId: number) {
+    this.dashboardService
+      .getPassed(pageId, classId)
+      .subscribe((result: Result) => {
+        console.log('passed rate', result);
+        this.passedRate = result.data * 10;
+      });
+  }
+
+  private getClassmateScore(classId: number, pageId: number) {
+    this.dashboardService
+      .getClassStudents(classId, pageId)
+      .subscribe((result: Result) => {
+        console.log('student class mate', result);
+        this.studentScoreTableList = result.data;
+      });
   }
 }

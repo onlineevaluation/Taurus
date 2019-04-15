@@ -2,14 +2,26 @@
 .score-charts {
     display: flex;
     justify-content: space-between;
+    justify-items: flex-end;
 
     .bar-chart {
+        margin-top: 40px;
+
+        div {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
         flex: 3;
+        justify-items: flex-end;
+        vertical-align: top;
     }
 
     .ranking {
+        vertical-align: top;
         // flex: 2;
         width: 240px;
+        justify-items: flex-end;
     }
 
 }

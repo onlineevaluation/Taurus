@@ -12,7 +12,7 @@
 </nz-dropdown>
 
 <div class="score-charts">
-  <div id="c1"></div>
+  <div id="c1" class="bar-chart"></div>
 
   <div class="ranking">
     成绩排名(前十名)
@@ -45,11 +45,11 @@
 <div class="other-info">
   <!-- 及格率 -->
   <div class="passed">
-    <div id="gauge"></div>
+    <div>1</div>
   </div>
   <div class="other">2</div>
 </div>
 
 <div class="student-table">
-  <app-student-table></app-student-table>
+  <app-student-table [studentScore]="studentScoreTableList"></app-student-table>
 </div>
