@@ -1,0 +1,136 @@
+<ng-container *ngIf="selects.length != 0">
+  <div class="problem-title">选择题</div>
+  <ng-container *ngFor="let item of selects; index as i">
+    <p>
+      <ng-container *ngIf="item.score == 5; else elseTemplate">
+        <i
+          nz-icon
+          [nzType]="'check-circle'"
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#52c41a'"
+        ></i>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <i
+          nz-icon
+          [nzType]="'close-circle'"
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#eb2f96'"
+        ></i>
+      </ng-template>
+
+      {{ i + 1 }}.{{ item.title }} &nbsp;
+      <span class="scored"> 得分 &nbsp; {{ item.score }} </span>
+    </p>
+    <p>A.{{ item.sectionA }}</p>
+    <p>B.{{ item.sectionB }}</p>
+    <p>C.{{ item.sectionC }}</p>
+    <p>D.{{ item.sectionD }}</p>
+    <p><span class="student-ans">学生答案</span>: {{ item.answer }}</p>
+    <p>
+      <span class="standardAnswer-ans">标准答案</span>:
+      {{ item.standardAnswer }}
+    </p>
+  </ng-container>
+</ng-container>
+<!-- 填空题 -->
+
+<ng-container *ngIf="blanks.length != 0">
+  <div class="problem-title">填空题</div>
+  <ng-container *ngFor="let item of blanks; index as i">
+    <p>
+      <ng-container *ngIf="item.score == 5; else elseTemplate">
+        <i
+          nz-icon
+          [nzType]="'check-circle'"
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#52c41a'"
+        ></i>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <i
+          nz-icon
+          [nzType]="'close-circle'"
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#eb2f96'"
+        ></i>
+      </ng-template>
+
+      {{ i + 1 }}.{{ item.title }} &nbsp;
+      <span class="scored"> 得分 &nbsp; {{ item.score }} </span>
+    </p>
+    <p><span class="student-ans">学生答案</span>: {{ item.answer }}</p>
+    <p>
+      <span class="standardAnswer-ans">标准答案</span> :
+      {{ item.standardAnswer }}
+    </p>
+  </ng-container>
+</ng-container>
+
+<!-- 简答题 -->
+
+<ng-container *ngIf="ans.length != 0">
+  <div class="problem-title">简答题</div>
+  <ng-container *ngFor="let item of ans; index as i">
+    <p>
+      <ng-container *ngIf="item.score == 10; else elseTemplate">
+        <i
+          nz-icon
+          [nzType]="'check-circle'"
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#52c41a'"
+        ></i>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <i
+          nz-icon
+          [nzType]="'close-circle'"
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#eb2f96'"
+        ></i>
+      </ng-template>
+
+      {{ i + 1 }}.{{ item.title }} &nbsp;
+      <span class="scored"> 得分 &nbsp; {{ item.score }} </span>
+    </p>
+    <p><span class="student-ans">学生答案</span> : {{ item.answer }}</p>
+    <p>
+      <span class="standardAnswer-ans">标准答案</span>:
+      {{ item.standardAnswer }}
+    </p>
+  </ng-container>
+
+  <!-- 算法题 -->
+
+  <ng-container *ngIf="algorithms.length != 0">
+    <div class="problem-title">简答题</div>
+    <ng-container *ngFor="let item of algorithms; index as i">
+      <p>
+        <ng-container *ngIf="item.score == 10; else elseTemplate">
+          <i
+            nz-icon
+            [nzType]="'check-circle'"
+            [nzTheme]="'twotone'"
+            [nzTwotoneColor]="'#52c41a'"
+          ></i>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <i
+            nz-icon
+            [nzType]="'close-circle'"
+            [nzTheme]="'twotone'"
+            [nzTwotoneColor]="'#eb2f96'"
+          ></i>
+        </ng-template>
+
+        {{ i + 1 }}.{{ item.title }} &nbsp;
+        <span class="scored"> 得分 &nbsp; {{ item.score }} </span>
+      </p>
+      <p><span class="student-ans">学生答案</span> : {{ item.answer }}</p>
+      <p>
+        <span class="standardAnswer-ans">标准答案</span>:
+        {{ item.standardAnswer }}
+      </p>
+    </ng-container>
+  </ng-container>
+</ng-container>

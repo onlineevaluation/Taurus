@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   classId: number;
   selected: string;
   menuitems: Array<ExamInfo> = [];
-
+  pageId: number;
   /**
    * 柱状图渲染
    */
@@ -64,6 +64,7 @@ export class DashboardComponent implements OnInit {
           });
           console.log(this.menuitems);
           this.selected = this.menuitems[0].title;
+          this.pageId = this.menuitems[0].pagesId;
           // 发起获取其他的请求
           this.getPageInfo(
             this.menuitems[0].pagesId,
@@ -89,6 +90,7 @@ export class DashboardComponent implements OnInit {
 
   selectChange(item: ExamInfo) {
     this.selected = item.title;
+    this.pageId = item.pagesId;
     this.getPageInfo(item.pagesId, item.classId, this.teacherInfo.identity);
     this.getScoreAnalytics(item.classId, item.pagesId);
     this.getPassedData(item.classId, item.pagesId);

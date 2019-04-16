@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { StudentAndScoreInfo } from 'src/app/entity/Info';
 import { Router } from '@angular/router';
 @Component({
@@ -8,18 +8,16 @@ import { Router } from '@angular/router';
 })
 export class StudentTableComponent implements OnInit {
   @Input() studentScore: Array<StudentAndScoreInfo> = [];
-
+  @Input() pageId: number;
   constructor(private router: Router) {}
 
-  ngOnInit() {
-    console.log('table', this.studentScore);
-  }
+  ngOnInit() {}
 
   sortName: string | null = null;
   sortValue: string | null = null;
 
   // /student-page
   toRouter(studentId: number) {
-    this.router.navigate(['/student-page', studentId]);
+    this.router.navigate(['/student-page', studentId, this.pageId]);
   }
 }
