@@ -20,11 +20,16 @@
       <nz-select
         id="subject"
         nzAllowClear
+        [(ngModel)]="selectedValue"
+        (ngModelChange)="onBlur($event)"
         formControlName="subjectController"
         nzPlaceHolder="Choose"
       >
-        <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-        <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+        <nz-option
+          *ngFor="let item of items"
+          nzValue="{{ item.id }}"
+          nzLabel="{{ item.name }}"
+        ></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>

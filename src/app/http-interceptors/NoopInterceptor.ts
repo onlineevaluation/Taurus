@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
  */
 @Injectable()
 export class NoopInterceptor implements HttpInterceptor {
-  private baseUrl = 'http://localhost:8081';
+  private baseUrl = 'http://106.12.195.114:8081';
 
   constructor(private router: Router) {}
 

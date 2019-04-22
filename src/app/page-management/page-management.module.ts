@@ -1,3 +1,4 @@
+import { PageManagementService } from './page-management.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageManagementComponent } from './page-management.component';
@@ -14,5 +15,6 @@ import { SelectTitleComponent } from './select-title/select-title.component';
     SelectTitleComponent,
   ],
   imports: [CommonModule, PageManagementRouting, SharedModule],
+  providers: [PageManagementService],
 })
 export class PageManagementModule {}

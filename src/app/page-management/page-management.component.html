@@ -7,7 +7,10 @@
 <div class="steps-content">
   <span [ngSwitch]="index">
     <p *ngSwitchCase="0">
-      <app-select-subject></app-select-subject>
+      <app-select-subject
+        (selectedId)="getCourseId($event)"
+        (checkedIdsOut)="getTypeIds($event)"
+      ></app-select-subject>
     </p>
     <p *ngSwitchCase="1">
       <app-select-title></app-select-title>
