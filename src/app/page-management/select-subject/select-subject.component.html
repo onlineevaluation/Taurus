@@ -23,7 +23,7 @@
         [(ngModel)]="selectedValue"
         (ngModelChange)="onBlur($event)"
         formControlName="subjectController"
-        nzPlaceHolder="Choose"
+        nzPlaceHolder="请选择课程"
       >
         <nz-option
           *ngFor="let item of items"
@@ -33,6 +33,34 @@
       </nz-select>
     </nz-form-control>
   </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="chapter" nzSm="6" nzXs="24" nzRequired>
+      章节
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        formControlName="chapterController"
+        id="chapter"
+        [nzMaxTagCount]="2"
+        [nzMaxTagPlaceholder]="tagPlaceHolder"
+        nzMode="multiple"
+        nzPlaceHolder="请选择章节"
+        [(ngModel)]="listOfSelectedValue"
+        (ngModelChange)="onSelectChapter($event)"
+      >
+        <nz-option
+          *ngFor="let option of listOfOption"
+          [nzLabel]="option.label"
+          [nzValue]="option.value"
+        ></nz-option>
+      </nz-select>
+      <ng-template #tagPlaceHolder let-selectedList>
+        还有 {{ selectedList.length }} 章已选择
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item>
     <nz-form-label nzSm="6" nzXs="24" nzRequired nzFor="type"
       >题型</nz-form-label

@@ -1,7 +1,9 @@
+import { PaperTitleParam } from './../entity/Params';
 import { Result } from './../entity/Result';
 import { PageManagementService } from './page-management.service';
 import { Component, OnInit } from '@angular/core';
 import { TeacherInfo } from '../entity/TeacherInfo';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-page-management',
@@ -12,6 +14,7 @@ export class PageManagementComponent implements OnInit {
   teacherId: number;
   courseId: number;
   typeIds: Array<number> = [];
+  chapterIds: Array<number> = [];
   constructor(private pageManagementService: PageManagementService) {}
 
   current = 0;
@@ -40,7 +43,7 @@ export class PageManagementComponent implements OnInit {
       case 1: {
         this.index = '1';
         // 发送请求
-
+        this.sendPageParam();
         break;
       }
       case 2: {
@@ -63,5 +66,21 @@ export class PageManagementComponent implements OnInit {
   }
   getTypeIds(typeIds: Array<number>) {
     this.typeIds = typeIds;
+  }
+
+  sendPageParam() {
+    const paperTitleParam = new PaperTitleParam();
+    paperTitleParam.courseId = this.courseId;
+    paperTitleParam.titleType = this.typeIds;
+    paperTitleParam.chapterIds = this.chapterIds;
+    this.pageManagementService
+      .sendPaperTypeIds(paperTitleParam)
+      .subscribe((result: Result) => {
+        console.log('info ', result);
+      });
+  }
+
+  getChapterIds(chapterIds: Array<number>) {
+    this.chapterIds = chapterIds;
   }
 }

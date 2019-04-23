@@ -17,10 +17,16 @@ export class SelectSubjectComponent implements OnInit {
   selectedValue: any;
   @Output() selectedId = new EventEmitter<number>();
   @Output() checkedIdsOut = new EventEmitter<Array<number>>();
+  @Output() chapterIdsOut = new EventEmitter<Array<number>>();
+  listOfOption: Array<{ label: string; value: string }> = [];
+  listOfSelectedValue = [];
+
   checkOptionsOne = [
     { label: '选择题', value: 1, checked: true },
     { label: '填空题', value: 2 },
     { label: '简答题', value: 3 },
+    { label: '代码题', value: 4 },
+    { label: '算法题', value: 5 },
   ];
   constructor(private pageManagementService: PageManagementService) {}
 
@@ -32,7 +38,7 @@ export class SelectSubjectComponent implements OnInit {
       .map(item => {
         return item.value;
       });
-    this.checkedIdsOut.emit(checkedIds)
+    this.checkedIdsOut.emit(checkedIds);
   }
 
   ngOnInit(): void {
@@ -50,6 +56,7 @@ export class SelectSubjectComponent implements OnInit {
       ),
       subjectController: new FormControl(),
       typeController: new FormControl(),
+      chapterController: new FormControl(),
     });
     this.firstGroup.get('typeController').setValue(this.checkOptionsOne);
     this.getCourseInfo();
@@ -59,10 +66,8 @@ export class SelectSubjectComponent implements OnInit {
   getCourseInfo() {
     this.pageManagementService.getCourseByTeacherId(this.teacherId).subscribe(
       (result: Result) => {
-        console.log('course', result);
         this.items = result.data;
         this.selectedValue = this.items[0];
-        console.log('select is ', this.selectedValue);
       },
       (error: Error) => {
         console.log(error.message);
@@ -70,7 +75,29 @@ export class SelectSubjectComponent implements OnInit {
     );
   }
   onBlur(value: any) {
-    console.log('value', value);
+    console.log('value is ', value);
+    // if (value == undefined || value == NaN) {
+    // }
+    this.pageManagementService
+      .getChapterByCourseId(value)
+      .subscribe((result: Result) => {
+        console.log('chapter is ', result);
+        this.listOfSelectedValue = [];
+        this.listOfOption = [];
+        const children: Array<{ label: string; value: string }> = [];
+        for (let i = 0; i < result.data.length; i++) {
+          children.push({
+            label: result.data[i].name,
+            value: result.data[i].id,
+          });
+        }
+        this.listOfOption = children;
+      });
     this.selectedId.emit(value);
+  }
+
+  onSelectChapter(value) {
+    console.log('select is chapter', this.listOfSelectedValue);
+    this.chapterIdsOut.emit(this.listOfSelectedValue);
   }
 }

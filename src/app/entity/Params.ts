@@ -9,3 +9,9 @@ export class examParam {
 
   pageId: number;
 }
+
+export class PaperTitleParam {
+  courseId: number;
+  titleType: Array<number> = [];
+  chapterIds: Array<number> = [];
+}

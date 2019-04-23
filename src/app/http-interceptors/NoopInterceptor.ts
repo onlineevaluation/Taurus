@@ -1,25 +1,32 @@
-import { Injectable } from '@angular/core';
 import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpErrorResponse,
-  HttpResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 /**
  * @author 杨晓辉
  * http 请求拦截器
  */
 @Injectable()
 export class NoopInterceptor implements HttpInterceptor {
-  private baseUrl = 'http://106.12.195.114:8081';
+  private baseUrl: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    if (environment.production == true) {
+      // 生产环境
+      this.baseUrl = 'http://106.12.195.114:8081';
+    } else {
+      // 开发环境
+      this.baseUrl = 'http://localhost:8081';
+    }
+  }
 
   intercept(
     req: HttpRequest<any>,
