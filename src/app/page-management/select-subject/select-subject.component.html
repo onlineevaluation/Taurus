@@ -19,7 +19,6 @@
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-select
         id="subject"
-        nzAllowClear
         [(ngModel)]="selectedValue"
         (ngModelChange)="onBlur($event)"
         formControlName="subjectController"
@@ -42,7 +41,7 @@
       <nz-select
         formControlName="chapterController"
         id="chapter"
-        [nzMaxTagCount]="2"
+        [nzMaxTagCount]="3"
         [nzMaxTagPlaceholder]="tagPlaceHolder"
         nzMode="multiple"
         nzPlaceHolder="请选择章节"

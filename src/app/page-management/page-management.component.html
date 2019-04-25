@@ -6,20 +6,22 @@
 
 <div class="steps-content">
   <span [ngSwitch]="index">
-    <p *ngSwitchCase="0">
+    <div *ngSwitchCase="0">
       <app-select-subject
         (selectedId)="getCourseId($event)"
         (checkedIdsOut)="getTypeIds($event)"
         (chapterIdsOut)="getChapterIds($event)"
       ></app-select-subject>
-    </p>
-    <p *ngSwitchCase="1">
+    </div>
+    <div *ngSwitchCase="1">
       <app-select-title
         [titlesList]="titles"
         (paperTitleEmitterInfo)="getPaperTitleInfo($event)"
       ></app-select-title>
-    </p>
-    <p *ngSwitchCase="2">3</p>
+    </div>
+    <div *ngSwitchCase="2">
+      <app-show-page [paperTitleInfoParam]="paperInfo"></app-show-page>
+    </div>
     <p *ngSwitchDefault>4</p>
   </span>
 </div>

@@ -15,3 +15,18 @@ export class PaperTitleParam {
   titleType: Array<number> = [];
   chapterIds: Array<number> = [];
 }
+/**
+ * 包含单张试卷所有信息
+ */
+export class PaperTitleInfoParam {
+  teacherId: number;
+  courseId: number;
+  paperTitle: string;
+  titleIds: Array<number> = [];
+  choiceScore: number;
+  blankScore: number;
+  answerScore: number;
+  codeScore: number;
+  algorithmScore: number;
+  totalScore:number
+}

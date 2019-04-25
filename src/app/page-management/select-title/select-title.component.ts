@@ -1,7 +1,7 @@
+import { PaperTitleInfoParam } from './../../entity/Params';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Title } from 'src/app/entity/Info';
-import { PaperTitleEmitterInfo } from 'src/app/entity/EmitterInfo';
+import { TitleInfo } from 'src/app/entity/Info';
 
 @Component({
   selector: 'app-select-title',
@@ -9,19 +9,20 @@ import { PaperTitleEmitterInfo } from 'src/app/entity/EmitterInfo';
   styleUrls: ['./select-title.component.less'],
 })
 export class SelectTitleComponent implements OnInit {
-  @Output() paperTitleEmitterInfo = new EventEmitter<PaperTitleEmitterInfo>();
+  @Output() paperTitleEmitterInfo = new EventEmitter<PaperTitleInfoParam>();
 
-  private _titlesList: Array<Array<Title>> = [];
+  private _titlesList: Array<Array<TitleInfo>> = [];
   tabsName: Array<string> = [];
   @Input()
-  set titlesList(titlesList: Array<Array<Title>>) {
+  set titlesList(titlesList: Array<Array<TitleInfo>>) {
+    this.tabsName = [];
     this._titlesList = titlesList;
-    titlesList.forEach((titles: Array<Title>) => {
+    titlesList.forEach((titles: Array<TitleInfo>) => {
       if (titles.length != 0) {
         if (titles[0].category == '1') {
           this.tabsName.push('选择题');
           // this.choiceTitleList = titles;
-          titles.forEach((title: Title) => {
+          titles.forEach((title: TitleInfo) => {
             this.choiceTitleList.push({
               label:
                 title.title +
@@ -40,7 +41,7 @@ export class SelectTitleComponent implements OnInit {
         }
         if (titles[0].category == '2') {
           this.tabsName.push('填空题');
-          titles.forEach((title: Title) => {
+          titles.forEach((title: TitleInfo) => {
             this.blankTitleList.push({
               label: title.title + ' \n答案 ' + title.answer,
               value: title.id + '%' + title.difficulty,
@@ -50,7 +51,7 @@ export class SelectTitleComponent implements OnInit {
         if (titles[0].category == '3') {
           this.tabsName.push('简答题');
 
-          titles.forEach((title: Title) => {
+          titles.forEach((title: TitleInfo) => {
             this.answerTitleList.push({
               label: title.title + ' \n答案 ' + title.answer,
               value: title.id + '%' + title.difficulty,
@@ -60,7 +61,7 @@ export class SelectTitleComponent implements OnInit {
         if (titles[0].category == '4') {
           this.tabsName.push('代码题');
 
-          titles.forEach((title: Title) => {
+          titles.forEach((title: TitleInfo) => {
             this.codeTitleList.push({
               label: title.title,
               value: title.id + '%' + title.difficulty,
@@ -70,7 +71,7 @@ export class SelectTitleComponent implements OnInit {
         if (titles[0].category == '5') {
           this.tabsName.push('算法题');
 
-          titles.forEach((title: Title) => {
+          titles.forEach((title: TitleInfo) => {
             this.algorithmTitleList.push({
               label: title.title,
               value: title.id + '%' + title.difficulty,
@@ -81,7 +82,7 @@ export class SelectTitleComponent implements OnInit {
     });
   }
 
-  get titlesList(): Array<Array<Title>> {
+  get titlesList(): Array<Array<TitleInfo>> {
     return this._titlesList;
   }
 
@@ -152,18 +153,19 @@ export class SelectTitleComponent implements OnInit {
    * 总分  = 选择题数量×选择题单个分数+填空题数量×填空题单个数量+。。。。+
    */
   calTotalScore() {
-    const choiceScore = this.validateForm.get('choiceScore').value;
-    const blankScore = this.validateForm.get('blankScore').value;
-    const answerScore = this.validateForm.get('answerScore').value;
-    const codeScore = this.validateForm.get('codeScore').value;
-    const algorithmScore = this.validateForm.get('algorithmScore').value;
+    const choiceScore: number = this.validateForm.get('choiceScore').value;
+    const blankScore: number = this.validateForm.get('blankScore').value;
+    const answerScore: number = this.validateForm.get('answerScore').value;
+    const codeScore: number = this.validateForm.get('codeScore').value;
+    const algorithmScore: number = this.validateForm.get('algorithmScore')
+      .value;
 
     this.totalScore =
       choiceScore * this.selectOfSelectedValue.length +
       blankScore * this.blankOfSelectedValue.length +
       answerScore * this.answerOfSelectedValue.length +
       codeScore * this.codeOfSelectedValue.length +
-      algorithmScore * this.answerOfSelectedValue.length;
+      algorithmScore * this.algorithmOfSelectedValue.length;
     this.titleTottal =
       this.selectOfSelectedValue.length +
       this.blankOfSelectedValue.length +
@@ -206,35 +208,40 @@ export class SelectTitleComponent implements OnInit {
       (choiceDiffi + blankDiffi + codeDiffi + answerDiffi + algorithmDiffi) /
       this.totalScore;
 
-    let paperTitleInfo = new PaperTitleEmitterInfo();
-    paperTitleInfo.paperTitle = this.validateForm.get('paperTitle').value;
-    paperTitleInfo.totalScore = this.totalScore;
+    let paperTitleParam = new PaperTitleInfoParam();
+    paperTitleParam.paperTitle = this.validateForm.get('paperTitle').value;
+    paperTitleParam.algorithmScore = algorithmScore;
+    paperTitleParam.choiceScore = choiceScore;
+    paperTitleParam.blankScore = blankScore;
+    paperTitleParam.answerScore = answerScore;
+    paperTitleParam.codeScore = codeScore;
+    paperTitleParam.totalScore = this.totalScore;
     this.selectOfSelectedValue.forEach(element => {
       const str = element.split('%');
       const id = parseInt(str[0]);
-      paperTitleInfo.choiceTitlesId.push(id);
+      paperTitleParam.titleIds.push(id);
     });
     this.blankOfSelectedValue.forEach(element => {
       const str = element.split('%');
       const id = parseInt(str[0]);
-      paperTitleInfo.blankTitlesId.push(id);
+      paperTitleParam.titleIds.push(id);
     });
     this.answerOfSelectedValue.forEach(element => {
       const str = element.split('%');
       const id = parseInt(str[0]);
-      paperTitleInfo.answerTitlesId.push(id);
+      paperTitleParam.titleIds.push(id);
     });
     this.codeOfSelectedValue.forEach(element => {
       const str = element.split('%');
       const id = parseInt(str[0]);
-      paperTitleInfo.codeTitlesId.push(id);
+      paperTitleParam.titleIds.push(id);
     });
 
     this.algorithmOfSelectedValue.forEach(element => {
       const str = element.split('%');
       const id = parseInt(str[0]);
-      paperTitleInfo.algorithmTitlesId.push(id);
+      paperTitleParam.titleIds.push(id);
     });
-    this.paperTitleEmitterInfo.emit(paperTitleInfo);
+    this.paperTitleEmitterInfo.emit(paperTitleParam);
   }
 }

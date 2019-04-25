@@ -74,22 +74,27 @@ export class SelectSubjectComponent implements OnInit {
       },
     );
   }
-  onBlur(value: any) {
-    this.pageManagementService
-      .getChapterByCourseId(value)
-      .subscribe((result: Result) => {
-        this.listOfSelectedValue = [];
-        this.listOfOption = [];
-        const children: Array<{ label: string; value: string }> = [];
-        for (let i = 0; i < result.data.length; i++) {
-          children.push({
-            label: result.data[i].name,
-            value: result.data[i].id,
-          });
-        }
-        this.listOfOption = children;
-      });
-    this.selectedId.emit(value);
+  onBlur(value: number) {
+    console.log('value is ', value);
+    if (!isNaN(value)) {
+      console.log('执行了');
+
+      this.pageManagementService
+        .getChapterByCourseId(value)
+        .subscribe((result: Result) => {
+          this.listOfSelectedValue = [];
+          this.listOfOption = [];
+          const children: Array<{ label: string; value: string }> = [];
+          for (let i = 0; i < result.data.length; i++) {
+            children.push({
+              label: result.data[i].name,
+              value: result.data[i].id,
+            });
+          }
+          this.listOfOption = children;
+        });
+      this.selectedId.emit(value);
+    }
   }
 
   onSelectChapter(value) {

@@ -1,0 +1,24 @@
+<nz-table #basicTable [nzData]="listOfData">
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th>课程</th>
+      <th>总分</th>
+      <th>创建时间</th>
+      <th>创建人</th>
+      <!-- <th>覆盖章节</th> -->
+      <th>查看</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of pageListOfData">
+      <td>{{ data.paperTitle }}</td>
+      <td>{{ data.courseName }}</td>
+      <td>{{ data.totalScore }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>{{ data.teacherName }}</td>
+      <!-- <td>{{ data.knowledgeList.toString() }}</td> -->
+      <td>查看</td>
+    </tr>
+  </tbody>
+</nz-table>

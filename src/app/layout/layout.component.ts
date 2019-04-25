@@ -15,13 +15,6 @@ export class LayoutComponent implements OnInit {
   ngOnInit() {}
 
   toRouter(routerString: string) {
-    switch (routerString) {
-      case 'home':
-        this.router.navigateByUrl('home');
-        break;
-      case 'page-management':
-        this.router.navigateByUrl('page-management');
-        break;
-    }
+    this.router.navigateByUrl(routerString);
   }
 }

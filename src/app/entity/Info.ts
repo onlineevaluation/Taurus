@@ -60,8 +60,10 @@ export class StudentProfileInfo {
   class: string;
   classId: number;
 }
-
-export class Title {
+/**
+ * 试题属性
+ */
+export class TitleInfo {
   analysis: string;
   answer: string;
   category: string;
@@ -72,4 +74,20 @@ export class Title {
   sectionC: string;
   sectionD: string;
   title: string;
+}
+
+export class PaperInfo {
+  courseName: string;
+  difficulty: number;
+  paperTitle: string;
+  teacherName: string;
+  titles: Array<TitleInfo> = [];
+  selectScore: number;
+  blankScore: number;
+  answerScore: number;
+  codeScore: number;
+  algorithmScore: number;
+  totalScore: number;
+  createTime: string;
+  knowledgeList: Array<string> = [];
 }

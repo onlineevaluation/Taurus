@@ -1,0 +1,106 @@
+<nz-page-header>
+  <nz-page-header-title>{{ _paperTitleInfo.paperTitle }}</nz-page-header-title>
+  <nz-page-header-subtitle>{{
+    _paperTitleInfo.courseName
+  }}</nz-page-header-subtitle>
+
+  <nz-page-header-content>
+    <div class="wrap">
+      <div nz-row class="content padding">
+        <div nz-col nzSpan="12">
+          <div class="description">
+            <span class="term">总分</span>
+            <p class="detail">{{ _paperTitleInfo.totalScore }}</p>
+          </div>
+        </div>
+        <div nz-col nzSpan="12">
+          <div class="description">
+            <span class="term">难度</span>
+            <p class="detail">{{ _paperTitleInfo.difficulty }}</p>
+          </div>
+        </div>
+        <div nz-col nzSpan="12">
+          <div class="description">
+            <span class="term">创建时间</span>
+            <p class="detail">{{ _paperTitleInfo.createTime }}</p>
+          </div>
+        </div>
+        <div nz-col nzSpan="12">
+          <div class="description">
+            <span class="term">创建人</span>
+            <p class="detail">
+              {{ _paperTitleInfo.teacherName }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nz-page-header-content>
+  <nz-page-header-footer>
+    <nz-divider nzText="试卷详情"></nz-divider>
+
+    <ng-container *ngIf="selectList.length != 0">
+      <div class="title-font">
+        选择题(每道题{{ _paperTitleInfo.selectScore }}分)
+      </div>
+      <ng-container
+        *ngFor="let item of selectList; let i = index"
+        class="title-show"
+      >
+        <div class="title-show">{{ i + 1 }}.{{ item.title }}</div>
+        <div class="title-show">
+          A: {{ item.sectionA }} &nbsp;&nbsp;B: {{ item.sectionB }} &nbsp;&nbsp;
+          C: {{ item.sectionC }}&nbsp;&nbsp; D:{{ item.sectionD }}
+        </div>
+        <div class="title-show">
+          答案: {{ item.answer }} 解析: {{ item.analysis }}
+        </div>
+        <div class="title-show">难度: {{ item.difficulty }}</div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="blankList.length != 0">
+      <div class="title-font">
+        填空题(每道题{{ _paperTitleInfo.blankScore }}分)
+      </div>
+      <ng-container *ngFor="let item of blankList; let i = index">
+        <div class="title-show">{{ i + 1 }}.{{ item.title }}</div>
+        <div class="title-show">答案: {{ item.answer }}</div>
+        <div class="title-show">解析: {{ item.analysis }}</div>
+        <div class="title-show">难度: {{ item.difficulty }}</div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="answerList.length != 0">
+      <div class="title-font">
+        简答题(每道题{{ _paperTitleInfo.answerScore }}分)
+      </div>
+      <ng-container *ngFor="let item of answerList; let i = index">
+        <div class="title-show">{{ i + 1 }}.{{ item.title }}</div>
+        <div class="title-show">答案: {{ item.answer }}</div>
+        <div class="title-show">解析: {{ item.analysis }}</div>
+        <div class="title-show">难度: {{ item.difficulty }}</div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="codeList.length != 0">
+      <div class="title-font">
+        代码题(每道题{{ _paperTitleInfo.codeScore }}分)
+      </div>
+      <ng-container *ngFor="let item of codeList; let i = index">
+        <div class="title-show">{{ i + 1 }}.{{ item.title }}</div>
+        <div class="title-show">答案: {{ item.answer }}</div>
+        <div class="title-show">解析: {{ item.analysis }}</div>
+        <div class="title-show">难度: {{ item.difficulty }}</div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="algorithmList.length != 0">
+      <div class="title-font">
+        算法题(每道题{{ _paperTitleInfo.algorithmScore }}分)
+      </div>
+      <ng-container *ngFor="let item of algorithmList; let i = index">
+        <div class="title-show">{{ i + 1 }}.{{ item.title }}</div>
+        <div class="title-show">答案: {{ item.answer }}</div>
+        <div class="title-show">解析: {{ item.analysis }}</div>
+        <div class="title-show">难度: {{ item.difficulty }}</div>
+      </ng-container>
+    </ng-container>
+  </nz-page-header-footer>
+</nz-page-header>

@@ -1,11 +1,10 @@
-import { PaperTitleEmitterInfo } from 'src/app/entity/EmitterInfo';
-import { Title } from 'src/app/entity/Info';
-import { PaperTitleParam } from './../entity/Params';
+import { Router } from '@angular/router';
+import { TitleInfo, PaperInfo } from 'src/app/entity/Info';
+import { PaperTitleParam, PaperTitleInfoParam } from './../entity/Params';
 import { Result } from './../entity/Result';
 import { PageManagementService } from './page-management.service';
 import { Component, OnInit } from '@angular/core';
 import { TeacherInfo } from '../entity/TeacherInfo';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-page-management',
@@ -17,12 +16,15 @@ export class PageManagementComponent implements OnInit {
   courseId: number;
   typeIds: Array<number> = [];
   chapterIds: Array<number> = [];
-  constructor(private pageManagementService: PageManagementService) {}
-  titles: Array<Array<Title>> = [];
+  constructor(
+    private pageManagementService: PageManagementService,
+    private router: Router,
+  ) {}
+  titles: Array<Array<TitleInfo>> = [];
   current = 0;
-
   index = '0';
-
+  paperTitleInfo: PaperTitleInfoParam;
+  paperInfo: PaperInfo;
   pre(): void {
     this.current -= 1;
     this.changeContent();
@@ -33,7 +35,9 @@ export class PageManagementComponent implements OnInit {
     this.changeContent();
   }
 
-  done(): void {}
+  done(): void {
+    this.router.navigateByUrl('/home');
+  }
 
   changeContent(): void {
     switch (this.current) {
@@ -50,6 +54,7 @@ export class PageManagementComponent implements OnInit {
       }
       case 2: {
         this.index = '2';
+        this.sendPageTitleParam();
         break;
       }
       default: {
@@ -82,11 +87,23 @@ export class PageManagementComponent implements OnInit {
       });
   }
 
+  sendPageTitleParam() {
+    this.paperTitleInfo.courseId = this.courseId;
+    this.paperTitleInfo.teacherId = this.teacherId;
+    this.pageManagementService
+      .postPaperInfo(this.paperTitleInfo)
+      .subscribe((result: Result) => {
+        // console.log('result', result);
+        this.paperInfo = result.data;
+      });
+  }
+
   getChapterIds(chapterIds: Array<number>) {
     this.chapterIds = chapterIds;
   }
 
-  getPaperTitleInfo(paperTitleInfo: PaperTitleEmitterInfo) {
+  getPaperTitleInfo(paperTitleInfo: PaperTitleInfoParam) {
     console.log('page info', paperTitleInfo);
+    this.paperTitleInfo = paperTitleInfo;
   }
 }
