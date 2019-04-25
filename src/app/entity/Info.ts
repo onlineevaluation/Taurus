@@ -60,3 +60,16 @@ export class StudentProfileInfo {
   class: string;
   classId: number;
 }
+
+export class Title {
+  analysis: string;
+  answer: string;
+  category: string;
+  difficulty: string;
+  id: number;
+  sectionA: string;
+  sectionB: string;
+  sectionC: string;
+  sectionD: string;
+  title: string;
+}

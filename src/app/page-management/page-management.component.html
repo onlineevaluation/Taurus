@@ -14,7 +14,10 @@
       ></app-select-subject>
     </p>
     <p *ngSwitchCase="1">
-      <app-select-title></app-select-title>
+      <app-select-title
+        [titlesList]="titles"
+        (paperTitleEmitterInfo)="getPaperTitleInfo($event)"
+      ></app-select-title>
     </p>
     <p *ngSwitchCase="2">3</p>
     <p *ngSwitchDefault>4</p>

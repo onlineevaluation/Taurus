@@ -1,3 +1,5 @@
+import { PaperTitleEmitterInfo } from 'src/app/entity/EmitterInfo';
+import { Title } from 'src/app/entity/Info';
 import { PaperTitleParam } from './../entity/Params';
 import { Result } from './../entity/Result';
 import { PageManagementService } from './page-management.service';
@@ -16,7 +18,7 @@ export class PageManagementComponent implements OnInit {
   typeIds: Array<number> = [];
   chapterIds: Array<number> = [];
   constructor(private pageManagementService: PageManagementService) {}
-
+  titles: Array<Array<Title>> = [];
   current = 0;
 
   index = '0';
@@ -76,11 +78,15 @@ export class PageManagementComponent implements OnInit {
     this.pageManagementService
       .sendPaperTypeIds(paperTitleParam)
       .subscribe((result: Result) => {
-        console.log('info ', result);
+        this.titles = result.data;
       });
   }
 
   getChapterIds(chapterIds: Array<number>) {
     this.chapterIds = chapterIds;
+  }
+
+  getPaperTitleInfo(paperTitleInfo: PaperTitleEmitterInfo) {
+    console.log('page info', paperTitleInfo);
   }
 }

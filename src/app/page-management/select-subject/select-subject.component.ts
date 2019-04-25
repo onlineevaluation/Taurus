@@ -22,7 +22,7 @@ export class SelectSubjectComponent implements OnInit {
   listOfSelectedValue = [];
 
   checkOptionsOne = [
-    { label: '选择题', value: 1, checked: true },
+    { label: '选择题', value: 1 },
     { label: '填空题', value: 2 },
     { label: '简答题', value: 3 },
     { label: '代码题', value: 4 },
@@ -75,13 +75,9 @@ export class SelectSubjectComponent implements OnInit {
     );
   }
   onBlur(value: any) {
-    console.log('value is ', value);
-    // if (value == undefined || value == NaN) {
-    // }
     this.pageManagementService
       .getChapterByCourseId(value)
       .subscribe((result: Result) => {
-        console.log('chapter is ', result);
         this.listOfSelectedValue = [];
         this.listOfOption = [];
         const children: Array<{ label: string; value: string }> = [];
@@ -97,7 +93,6 @@ export class SelectSubjectComponent implements OnInit {
   }
 
   onSelectChapter(value) {
-    console.log('select is chapter', this.listOfSelectedValue);
     this.chapterIdsOut.emit(this.listOfSelectedValue);
   }
 }
