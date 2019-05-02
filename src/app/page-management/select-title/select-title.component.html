@@ -1,20 +1,15 @@
-<form
-  nz-form
-  [nzLayout]="'inline'"
-  [formGroup]="validateForm"
-  (ngSubmit)="submitForm()"
->
+<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
   <nz-form-item>
     <nz-form-control>
       <nz-input-group>
-        <input formControlName="paperTitle" nz-input placeholder="试卷名称" />
+        <input formControlName="paperTitle" nz-input placeholder="试卷名称"/>
       </nz-input-group>
       <nz-form-explain
         *ngIf="
           validateForm.get('paperTitle')?.dirty &&
           validateForm.get('paperTitle')?.errors
         "
-        >请输入试卷名称
+      >请输入试卷名称
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
@@ -34,7 +29,7 @@
           validateForm.get('choiceScore')?.dirty &&
           validateForm.get('choiceScore')?.errors
         "
-        >请输入选择题单项分值
+      >请输入选择题单项分值
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
@@ -54,7 +49,7 @@
           validateForm.get('blankScore')?.dirty &&
           validateForm.get('blankScore')?.errors
         "
-        >请输入填空题单项分值
+      >请输入填空题单项分值
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
@@ -74,7 +69,7 @@
           validateForm.get('answerScore')?.dirty &&
           validateForm.get('answerScore')?.errors
         "
-        >请输入简答题单项分值
+      >请输入简答题单项分值
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
@@ -94,7 +89,7 @@
           validateForm.get('codeScore')?.dirty &&
           validateForm.get('codeScore')?.errors
         "
-        >请输入代码题单项分值
+      >请输入代码题单项分值
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
@@ -114,7 +109,7 @@
           validateForm.get('algorithmScore')?.dirty &&
           validateForm.get('algorithmScore')?.errors
         "
-        >请输入算法题单项分值
+      >请输入算法题单项分值
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
@@ -130,7 +125,7 @@
   自动组卷
 </button>
 
-<span [ngSwitch]="isAuto">
+<div [ngSwitch]="isAuto">
   <div *ngSwitchCase="true">1</div>
   <!-- 手动组卷 -->
   <div *ngSwitchCase="false">
@@ -180,7 +175,7 @@
                       nz-checkbox
                       nzValue="{{ item.value }}"
                       *ngFor="let item of choiceTitleList"
-                      >{{ item.label }}</label
+                    >{{ item.label }}</label
                     >
                   </div>
                 </div>
@@ -200,7 +195,7 @@
                       nz-checkbox
                       nzValue="{{ item.value }}"
                       *ngFor="let item of blankTitleList"
-                      >{{ item.label }}</label
+                    >{{ item.label }}</label
                     >
                   </div>
                 </div>
@@ -220,7 +215,7 @@
                       nz-checkbox
                       nzValue="{{ item.value }}"
                       *ngFor="let item of answerTitleList"
-                      >{{ item.label }}</label
+                    >{{ item.label }}</label
                     >
                   </div>
                 </div>
@@ -240,7 +235,7 @@
                       nz-checkbox
                       nzValue="{{ item.value }}"
                       *ngFor="let item of codeTitleList"
-                      >{{ item.label }}</label
+                    >{{ item.label }}</label
                     >
                   </div>
                 </div>
@@ -260,7 +255,7 @@
                       nz-checkbox
                       nzValue="{{ item.value }}"
                       *ngFor="let item of algorithmTitleList"
-                      >{{ item.label }}</label
+                    >{{ item.label }}</label
                     >
                   </div>
                 </div>
@@ -268,15 +263,7 @@
             </ng-container>
           </div>
           <div *ngSwitchCase="2">
-            <nz-collapse [nzBordered]="false">
-              <nz-collapse-panel
-                *ngFor="let panel of panels"
-                [nzHeader]="panel.name"
-                [nzActive]="panel.active"
-              >
-                <p>{{ panel.name }} content</p>
-              </nz-collapse-panel>
-            </nz-collapse>
+
           </div>
           <div *ngSwitchDefault>3</div>
         </span>
@@ -284,4 +271,4 @@
     </nz-tabset>
   </div>
   <div *ngSwitchDefault></div>
-</span>
+</div>

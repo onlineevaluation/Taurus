@@ -1,13 +1,13 @@
-import { PageManagementService } from './../page-management.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TeacherInfo } from 'src/app/entity/TeacherInfo';
-import { Result } from 'src/app/entity/Result';
+import { PageManagementService } from "../page-management.service";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { TeacherInfo } from "src/app/entity/TeacherInfo";
+import { Result } from "src/app/entity/Result";
 
 @Component({
-  selector: 'app-select-subject',
-  templateUrl: './select-subject.component.html',
-  styleUrls: ['./select-subject.component.less'],
+  selector: "app-select-subject",
+  templateUrl: "./select-subject.component.html",
+  styleUrls: ["./select-subject.component.less"]
 })
 export class SelectSubjectComponent implements OnInit {
   teacherName: string;
@@ -22,13 +22,15 @@ export class SelectSubjectComponent implements OnInit {
   listOfSelectedValue = [];
 
   checkOptionsOne = [
-    { label: '选择题', value: 1 },
-    { label: '填空题', value: 2 },
-    { label: '简答题', value: 3 },
-    { label: '代码题', value: 4 },
-    { label: '算法题', value: 5 },
+    { label: "选择题", value: 1 },
+    { label: "填空题", value: 2 },
+    { label: "简答题", value: 3 },
+    { label: "代码题", value: 4 },
+    { label: "算法题", value: 5 }
   ];
-  constructor(private pageManagementService: PageManagementService) {}
+
+  constructor(private pageManagementService: PageManagementService) {
+  }
 
   log(value: any[]): void {
     let checkedIds = value
@@ -42,7 +44,7 @@ export class SelectSubjectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const profileJson = localStorage.getItem('profile');
+    const profileJson = localStorage.getItem("profile");
     const teacherInfo: TeacherInfo = JSON.parse(profileJson);
     this.teacherName = teacherInfo.name;
     this.teacherId = teacherInfo.identity;
@@ -50,15 +52,15 @@ export class SelectSubjectComponent implements OnInit {
       teacherNameController: new FormControl(
         {
           value: this.teacherName,
-          disabled: true,
+          disabled: true
         },
-        Validators.required,
+        Validators.required
       ),
       subjectController: new FormControl(),
       typeController: new FormControl(),
-      chapterController: new FormControl(),
+      chapterController: new FormControl()
     });
-    this.firstGroup.get('typeController').setValue(this.checkOptionsOne);
+    this.firstGroup.get("typeController").setValue(this.checkOptionsOne);
     this.getCourseInfo();
     // this.selectedValue = this.items[0];
   }
@@ -71,14 +73,12 @@ export class SelectSubjectComponent implements OnInit {
       },
       (error: Error) => {
         console.log(error.message);
-      },
+      }
     );
   }
-  onBlur(value: number) {
-    console.log('value is ', value);
-    if (!isNaN(value)) {
-      console.log('执行了');
 
+  onBlur(value: number) {
+    if (!isNaN(value)) {
       this.pageManagementService
         .getChapterByCourseId(value)
         .subscribe((result: Result) => {
@@ -88,7 +88,7 @@ export class SelectSubjectComponent implements OnInit {
           for (let i = 0; i < result.data.length; i++) {
             children.push({
               label: result.data[i].name,
-              value: result.data[i].id,
+              value: result.data[i].id
             });
           }
           this.listOfOption = children;
@@ -97,7 +97,7 @@ export class SelectSubjectComponent implements OnInit {
     }
   }
 
-  onSelectChapter(value) {
+  onSelectChapter() {
     this.chapterIdsOut.emit(this.listOfSelectedValue);
   }
 }

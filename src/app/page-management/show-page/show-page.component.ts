@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ShowPageComponent implements OnInit {
   private _paperTitleInfo: PaperInfo;
-
+  paperTitleInfo: PaperInfo;
   selectList: Array<TitleInfo> = [];
   blankList: Array<TitleInfo> = [];
   answerList: Array<TitleInfo> = [];
@@ -18,6 +18,7 @@ export class ShowPageComponent implements OnInit {
   @Input()
   set paperTitleInfoParam(paperTitleParam: PaperInfo) {
     this._paperTitleInfo = paperTitleParam;
+    this.paperTitleInfo = paperTitleParam;
     paperTitleParam.titles.forEach(title => {
       if (title.category == '1') {
         this.selectList.push(title);

@@ -28,5 +28,15 @@ export class PaperTitleInfoParam {
   answerScore: number;
   codeScore: number;
   algorithmScore: number;
-  totalScore:number
+  totalScore: number;
+}
+/**
+ * 提交试卷和班级关联信息
+ */
+export class PageClassParam {
+  classIds: Array<number> = [];
+  teacherId: number;
+  startTime: number;
+  endTime: number;
+  pageId: number;
 }

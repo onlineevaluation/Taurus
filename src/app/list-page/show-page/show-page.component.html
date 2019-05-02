@@ -3,7 +3,9 @@
   <nz-page-header-subtitle>{{
     paperTitleInfo.courseName
   }}</nz-page-header-subtitle>
-
+  <nz-page-header-extra>
+    <button nz-button nzType="primary" (click)="showModal()">发布</button>
+  </nz-page-header-extra>
   <nz-page-header-content>
     <div class="wrap">
       <div nz-row class="content padding">
@@ -104,3 +106,45 @@
     </ng-container>
   </nz-page-header-footer>
 </nz-page-header>
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="准备发布"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+>
+  <div>
+    <div>
+      选择班级
+      <nz-select
+        id="class-select"
+        [nzMaxTagCount]="3"
+        [nzMaxTagPlaceholder]="tagPlaceHolder"
+        style="width: 100%"
+        nzMode="multiple"
+        nzPlaceHolder="选择班级"
+        [(ngModel)]="listOfSelectedValue"
+      >
+        <nz-option
+          *ngFor="let option of classListOption"
+          [nzLabel]="option.label"
+          [nzValue]="option.value"
+        ></nz-option>
+      </nz-select>
+      <ng-template #tagPlaceHolder let-selectedList>
+        还有 {{ selectedList.length }} 已选择
+      </ng-template>
+    </div>
+
+    <br />
+    选择考试日期
+    <nz-range-picker
+      style="width: 100%"
+      [nzShowTime]="{ nzFormat: 'HH:mm' }"
+      nzFormat="yyyy-MM-dd HH:mm"
+      [nzPlaceHolder]="['开始日期', '结束日期']"
+      (ngModelChange)="onChange($event)"
+      (nzOnOk)="onOk($event)"
+    ></nz-range-picker>
+  </div>
+</nz-modal>

@@ -1,7 +1,7 @@
 export class ExamInfo {
   id: number;
   classId: number;
-  pagesId: number;
+  pageId: number;
   startTime: string;
   endTime: string;
   title: string;
@@ -87,7 +87,7 @@ export class PaperInfo {
   answerScore: number;
   codeScore: number;
   algorithmScore: number;
-  totalScore: number;
+  totalScores: number;
   createTime: string;
   knowledgeList: Array<string> = [];
 }
