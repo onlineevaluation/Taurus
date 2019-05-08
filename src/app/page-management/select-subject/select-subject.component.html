@@ -46,7 +46,7 @@
         nzMode="multiple"
         nzPlaceHolder="请选择章节"
         [(ngModel)]="listOfSelectedValue"
-        (ngModelChange)="onSelectChapter($event)"
+        (ngModelChange)="onSelectChapter()"
       >
         <nz-option
           *ngFor="let option of listOfOption"

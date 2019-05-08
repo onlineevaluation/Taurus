@@ -1,30 +1,34 @@
-import { Router } from '@angular/router';
-import { TitleInfo, PaperInfo } from 'src/app/entity/Info';
-import { PaperTitleParam, PaperTitleInfoParam } from './../entity/Params';
-import { Result } from './../entity/Result';
-import { PageManagementService } from './page-management.service';
-import { Component, OnInit } from '@angular/core';
-import { TeacherInfo } from '../entity/TeacherInfo';
+import { Router } from "@angular/router";
+import { TitleInfo, PaperInfo } from "src/app/entity/Info";
+import { PaperTitleParam, PaperTitleInfoParam } from "./../entity/Params";
+import { Result } from "./../entity/Result";
+import { PageManagementService } from "./page-management.service";
+import { Component, OnInit } from "@angular/core";
+import { TeacherInfo } from "../entity/TeacherInfo";
 
 @Component({
-  selector: 'app-page-management',
-  templateUrl: './page-management.component.html',
-  styleUrls: ['./page-management.component.less'],
+  selector: "app-page-management",
+  templateUrl: "./page-management.component.html",
+  styleUrls: ["./page-management.component.less"]
 })
 export class PageManagementComponent implements OnInit {
   teacherId: number;
   courseId: number;
   typeIds: Array<number> = [];
   chapterIds: Array<number> = [];
+
   constructor(
     private pageManagementService: PageManagementService,
-    private router: Router,
-  ) {}
+    private router: Router
+  ) {
+  }
+
   titles: Array<Array<TitleInfo>> = [];
   current = 0;
-  index = '0';
-  paperTitleInfo: PaperTitleInfoParam;
-  paperInfo: PaperInfo;
+  index = "0";
+  paperTitleInfo: PaperTitleInfoParam = new PaperTitleInfoParam();
+  paperInfo: PaperInfo = new PaperInfo();
+
   pre(): void {
     this.current -= 1;
     this.changeContent();
@@ -36,34 +40,34 @@ export class PageManagementComponent implements OnInit {
   }
 
   done(): void {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl("/home");
   }
 
   changeContent(): void {
     switch (this.current) {
       case 0: {
-        this.index = '0';
+        this.index = "0";
 
         break;
       }
       case 1: {
-        this.index = '1';
-        // 发送请求
+        this.index = "1";
         this.sendPageParam();
         break;
       }
       case 2: {
-        this.index = '2';
+        this.index = "2";
         this.sendPageTitleParam();
         break;
       }
       default: {
-        this.index = 'error';
+        this.index = "error";
       }
     }
   }
+
   ngOnInit() {
-    const profileJson = localStorage.getItem('profile');
+    const profileJson = localStorage.getItem("profile");
     const teacherInfo: TeacherInfo = JSON.parse(profileJson);
     this.teacherId = teacherInfo.identity;
   }
@@ -71,6 +75,7 @@ export class PageManagementComponent implements OnInit {
   getCourseId(courseId: number) {
     this.courseId = courseId;
   }
+
   getTypeIds(typeIds: Array<number>) {
     this.typeIds = typeIds;
   }
@@ -93,7 +98,7 @@ export class PageManagementComponent implements OnInit {
     this.pageManagementService
       .postPaperInfo(this.paperTitleInfo)
       .subscribe((result: Result) => {
-        // console.log('result', result);
+        console.log("result page preview", result);
         this.paperInfo = result.data;
       });
   }
@@ -103,7 +108,7 @@ export class PageManagementComponent implements OnInit {
   }
 
   getPaperTitleInfo(paperTitleInfo: PaperTitleInfoParam) {
-    console.log('page info', paperTitleInfo);
+    console.log("page info", paperTitleInfo);
     this.paperTitleInfo = paperTitleInfo;
   }
 }

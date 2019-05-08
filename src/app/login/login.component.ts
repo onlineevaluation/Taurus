@@ -38,13 +38,16 @@ export class LoginComponent implements OnInit {
         if (bool) {
           if (authInfo().roles.indexOf('teacher') != -1) {
             this.loginService.getProfile();
-            this.router.navigateByUrl('/');
+
           }
         } else {
         }
       },
       (error: Error) => {
       },
+      ()=> {
+        this.router.navigateByUrl('/');
+      }
     );
   }
 

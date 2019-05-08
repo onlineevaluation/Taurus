@@ -4,7 +4,7 @@ export class ExamInfo {
   pageId: number;
   startTime: string;
   endTime: string;
-  title: string;
+  pageTitle: string;
 }
 
 /**
@@ -20,6 +20,7 @@ export class StudentAndScoreInfo {
   studentName: string;
   studentNumber: string;
 }
+
 /**
  * 学生考试详细信息
  */
@@ -27,9 +28,9 @@ export class PageDetailsParam {
   id: number;
   pageId: number;
   score: number;
-  pageTitle: string = '暂无数据';
+  pageTitle: string = "暂无数据";
   course: string;
-  dotime: string = 'NAN';
+  dotime: string = "NAN";
   select: Array<StudentAnswerSelect> = [];
   blank: Array<StudentAnswer> = [];
   ans: Array<StudentAnswer> = [];
@@ -60,6 +61,7 @@ export class StudentProfileInfo {
   class: string;
   classId: number;
 }
+
 /**
  * 试题属性
  */
@@ -77,6 +79,7 @@ export class TitleInfo {
 }
 
 export class PaperInfo {
+  pageId: number;
   courseName: string;
   difficulty: number;
   paperTitle: string;

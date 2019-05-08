@@ -60,8 +60,6 @@ export class DashboardComponent implements OnInit {
       (result: Result) => {
         result.data.forEach((element: ExamInfo) => {
           console.log("element is ", element);
-          // let examInfo = new ExamInfo();
-          // examInfo = element;
           this.menuitems.push(element);
         });
       },
@@ -70,7 +68,7 @@ export class DashboardComponent implements OnInit {
       },
       () => {
         console.log("menuitems", this.menuitems);
-        this.selected = this.menuitems[0].title;
+        this.selected = this.menuitems[0].pageTitle;
         this.pageId = this.menuitems[0].pageId;
         // 发起获取其他的请求
         this.getPageInfo(
@@ -96,7 +94,7 @@ export class DashboardComponent implements OnInit {
   }
 
   selectChange(item: ExamInfo) {
-    this.selected = item.title;
+    this.selected = item.pageTitle;
     this.pageId = item.pageId;
     this.getPageInfo(item.pageId, item.classId, this.teacherInfo.identity);
     this.getScoreAnalytics(item.classId, item.pageId);

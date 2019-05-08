@@ -23,10 +23,10 @@ describe('AppComponent', () => {
   it(`should have as title 'Taurus'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('Taurus');
+    expect(app.pageTitle).toEqual('Taurus');
   });
 
-  it('should render title in a h1 tag', () => {
+  it('should render pageTitle in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
