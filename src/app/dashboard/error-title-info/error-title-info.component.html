@@ -1,0 +1,30 @@
+<nz-row [nzGutter]="16">
+  <nz-col [nzSpan]="8">
+    <nz-statistic
+      [nzValue]="classScoreInfo.highestScore | number"
+      [nzTitle]="'最高分'"
+    ></nz-statistic>
+    <ng-template #prefixTpl></ng-template>
+  </nz-col>
+  <nz-col [nzSpan]="8">
+    <nz-statistic
+      [nzValue]="classScoreInfo.lowestScore"
+      [nzTitle]="'最低分'"
+    ></nz-statistic>
+  </nz-col>
+  <nz-col [nzSpan]="8">
+    <nz-statistic
+      [nzValue]="classScoreInfo.average | number: '.2'"
+      [nzTitle]="'平均分'"
+    ></nz-statistic>
+  </nz-col>
+</nz-row>
+
+<!-- 其他信息 -->
+<nz-skeleton [nzActive]="true" [nzLoading]="loading">
+  <!-- 选择题 -->
+  <app-select-info
+    [choiceErrorList]="titleErrorInfo.choiceErrorList"
+  ></app-select-info>
+  <nz-divider></nz-divider>
+</nz-skeleton>
