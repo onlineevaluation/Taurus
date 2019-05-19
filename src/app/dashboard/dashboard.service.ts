@@ -34,4 +34,12 @@ export class DashboardService {
   getClassStudents(classId: number, pageId: number): Observable<Result> {
     return this.http.get<Result>(`/class/students/${classId}/${pageId}`);
   }
+
+  getClassErrorInPage(classId: number, pageId: number): Observable<Result> {
+    return this.http.get<Result>(`/exam/class/${classId}/${pageId}`);
+  }
+
+  getErrorInfo(classId:number,pageId:number):Observable<Result> {
+    return this.http.get<Result>(`/exam/error/${classId}/${pageId}`)
+  }
 }

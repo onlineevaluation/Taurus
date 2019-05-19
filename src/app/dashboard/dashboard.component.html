@@ -11,6 +11,9 @@
   </ul>
 </nz-dropdown>
 
+<button nz-button nzType="primary" class="analytics" (click)="toRouter()">
+  <i nz-icon nzType="area-chart">考试分析详情</i>
+</button>
 <div class="score-charts">
   <div id="c1" class="bar-chart"></div>
 
@@ -39,14 +42,6 @@
       </ng-template>
     </nz-list>
   </div>
-</div>
-
-<div class="other-info">
-  <!-- 及格率 -->
-  <div class="passed">
-    <div>1</div>
-  </div>
-  <div class="other">2</div>
 </div>
 
 <div class="student-table">

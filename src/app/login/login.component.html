@@ -3,48 +3,27 @@
     <h1>HUI // 登录</h1>
   </div>
 
-  <form
-    nz-form
-    [formGroup]="validateForm"
-    class="login-form"
-    (ngSubmit)="submitForm()"
-  >
+  <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-control>
         <nz-input-group [nzPrefix]="prefixUser">
-          <input
-            type="text"
-            nz-input
-            formControlName="userName"
-            placeholder="工号"
-          />
+          <input nzSize="large" type="text" nz-input formControlName="userName" placeholder="工号" />
         </nz-input-group>
-        <nz-form-explain
-          *ngIf="
+        <nz-form-explain *ngIf="
             validateForm.get('userName').dirty &&
             validateForm.get('userName').errors
-          "
-          >请输入工号!</nz-form-explain
-        >
+          ">请输入工号!</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-control>
         <nz-input-group [nzPrefix]="prefixLock">
-          <input
-            type="password"
-            nz-input
-            formControlName="password"
-            placeholder="密码"
-          />
+          <input type="password" nz-input nzSize="large" formControlName="password" placeholder="密码" />
         </nz-input-group>
-        <nz-form-explain
-          *ngIf="
+        <nz-form-explain *ngIf="
             validateForm.get('password').dirty &&
             validateForm.get('password').errors
-          "
-          >请输入密码!</nz-form-explain
-        >
+          ">请输入密码!</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -53,10 +32,9 @@
           <span>记住密码</span>
         </label>
         <a class="login-form-forgot" class="login-form-forgot">忘记密码</a>
-        <button nz-button class="login-form-button" [nzType]="'primary'">
+        <button nz-button class="login-form-button" [nzType]="'primary'" nzSize="large" [nzLoading]="isLoading">
           登录
         </button>
-        <a href="">注册!</a>
       </nz-form-control>
     </nz-form-item>
   </form>

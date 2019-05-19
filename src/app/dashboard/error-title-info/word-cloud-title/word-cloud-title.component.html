@@ -1,0 +1,13 @@
+<div class="title">题目 {{ errorTitleInfo.title }}</div>
+<p>低于该题及格分数的词云</p>
+
+<ng-container>
+  <angular-tag-cloud
+    [data]="data"
+    [width]="options.width"
+    [height]="options.height"
+    [overflow]="options.overflow"
+    [randomizeAngle]="options.randomizeAngle"
+  >
+  </angular-tag-cloud>
+</ng-container>

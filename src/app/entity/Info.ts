@@ -28,9 +28,9 @@ export class PageDetailsParam {
   id: number;
   pageId: number;
   score: number;
-  pageTitle: string = "暂无数据";
+  pageTitle: string = '暂无数据';
   course: string;
-  dotime: string = "NAN";
+  dotime: string = 'NAN';
   select: Array<StudentAnswerSelect> = [];
   blank: Array<StudentAnswer> = [];
   ans: Array<StudentAnswer> = [];
@@ -93,4 +93,25 @@ export class PaperInfo {
   totalScores: number;
   createTime: string;
   knowledgeList: Array<string> = [];
+}
+
+/**
+ * 试卷概况
+ */
+export class ClassScoreInfo {
+  highestScore: number = 0;
+  lowestScore: number = 0;
+  average: number = 0;
+}
+
+export class ErrorInfo {
+  title: string;
+  titleId: number;
+  frequency: Map<string, number> = new Map<string, number>();
+}
+
+export class TitleErrorInfo {
+  choiceErrorList: Array<ErrorInfo> = [];
+  answerErrorWordFrequency: Array<ErrorInfo> = [];
+  blankErrorWordFrequency: Array<ErrorInfo> = [];
 }

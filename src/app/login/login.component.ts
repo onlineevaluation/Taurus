@@ -12,7 +12,7 @@ import { authInfo } from '../utils/auth.util';
 })
 export class LoginComponent implements OnInit {
   validateForm: FormGroup;
-
+  isLoading = false;
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm(): void {
+    this.isLoading = true;
     const username = this.validateForm.get('userName').value;
     const password = this.validateForm.get('password').value;
 
@@ -44,8 +45,9 @@ export class LoginComponent implements OnInit {
         }
       },
       (error: Error) => {
+        this.isLoading = false;
       },
-      ()=> {
+      () => {
         this.router.navigateByUrl('/');
       }
     );

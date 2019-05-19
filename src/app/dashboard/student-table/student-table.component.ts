@@ -13,9 +13,6 @@ export class StudentTableComponent implements OnInit {
 
   ngOnInit() {}
 
-  sortName: string | null = null;
-  sortValue: string | null = null;
-
   // /student-page
   toRouter(studentId: number) {
     this.router.navigate(['/student-page', studentId, this.pageId]);

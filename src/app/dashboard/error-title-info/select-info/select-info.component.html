@@ -1,22 +1,20 @@
-<ng-container
-  *ngFor="let item of titleErrorInfo.choiceErrorList"
-  class="select-problem"
->
-  <div class="title">题目 {{ item.title }}</div>
+<ng-container class="select-problem">
+  <div class="title">题目 {{ choiceError.title }}</div>
   <!-- 图表-->
-  <!-- <ngx-charts-bar-vertical
+  <ngx-charts-bar-vertical
+    class="bar-chart"
     [view]="view"
     [scheme]="colorScheme"
     [results]="single"
     [gradient]="gradient"
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    [legend]="showLegend"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    (select)="onSelect($event)"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="false"
+    [showXAxisLabel]="false"
+    [showYAxisLabel]="false"
+    [xAxisLabel]="true"
+    [yAxisLabel]="true"
+    [showDataLabel]="true"
   >
-  </ngx-charts-bar-vertical> -->
+  </ngx-charts-bar-vertical>
 </ng-container>

@@ -21,10 +21,36 @@
 </nz-row>
 
 <!-- 其他信息 -->
-<nz-skeleton [nzActive]="true" [nzLoading]="loading">
-  <!-- 选择题 -->
-  <app-select-info
-    [choiceErrorList]="titleErrorInfo.choiceErrorList"
-  ></app-select-info>
-  <nz-divider></nz-divider>
-</nz-skeleton>
+
+<ng-container *ngIf="loading; else elseTemplate">
+  <nz-skeleton [nzActive]="true"></nz-skeleton>
+  <nz-skeleton [nzActive]="true"></nz-skeleton>
+  <nz-skeleton [nzActive]="true"></nz-skeleton>
+</ng-container>
+<ng-template #elseTemplate>
+  <p>选择题</p>
+  <ng-container
+    *ngFor="let item of titleErrorInfo.choiceErrorList; let i = index"
+  >
+    <!-- 选择题 -->
+
+    {{ i + 1 }} <app-select-info [choiceError]="item"></app-select-info>
+    <nz-divider></nz-divider>
+  </ng-container>
+
+  <p>填空题</p>
+  <ng-container
+    *ngFor="let item of titleErrorInfo.blankErrorWordFrequency; let i = index"
+  >
+    {{ i + 1
+    }}<app-word-cloud-title [errorTitleInfo]="item"></app-word-cloud-title>
+  </ng-container>
+  <p>简答题</p>
+
+  <ng-container
+    *ngFor="let item of titleErrorInfo.answerErrorWordFrequency; let i = index"
+  >
+    {{ i + 1 }}
+    <app-word-cloud-title [errorTitleInfo]="item"></app-word-cloud-title>
+  </ng-container>
+</ng-template>
