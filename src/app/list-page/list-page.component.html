@@ -1,4 +1,4 @@
-<nz-table  [nzData]="pageListOfData">
+<nz-table [nzData]="pageListOfData">
   <thead>
     <tr>
       <th>名称</th>
@@ -14,7 +14,9 @@
       <td>{{ data.courseName }}</td>
       <td>{{ data.totalScores }}</td>
       <td>{{ data.createTime }}</td>
-      <td (click)="showPage(data.pageId)">查看</td>
+      <td (click)="showPage(data.pageId)">
+        <button nz-button nzType="default">查看</button>
+      </td>
     </tr>
   </tbody>
 </nz-table>

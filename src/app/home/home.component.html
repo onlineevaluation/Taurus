@@ -1,24 +1,39 @@
 <div class="header">
   <div class="avatar-name">
-    <nz-avatar [nzText]="avatarText" nzSize="64" [ngStyle]="{ 'background-color': color }"
-      style="vertical-align: middle;">
+    <nz-avatar
+      [nzText]="avatarText"
+      nzSize="64"
+      [ngStyle]="{ 'background-color': color }"
+      style="vertical-align: middle;"
+    >
     </nz-avatar>
     <div class="username">{{ username }},早上好，又是美好的一天！</div>
   </div>
 
   <nz-row [nzGutter]="16" class="student-statistic">
     <nz-col [nzSpan]="12">
-      <nz-statistic [nzValue]="classList.length | number" [nzTitle]="'班级'"></nz-statistic>
+      <nz-statistic
+        [nzValue]="classList.length | number"
+        [nzTitle]="'班级'"
+      ></nz-statistic>
     </nz-col>
     <nz-col [nzSpan]="12">
-      <nz-statistic [nzValue]="classmemberCount | number: '1.0-2'" [nzTitle]="'学生总数'"></nz-statistic>
+      <nz-statistic
+        [nzValue]="classmemberCount | number: '1.0-2'"
+        [nzTitle]="'学生总数'"
+      ></nz-statistic>
     </nz-col>
   </nz-row>
 </div>
 
 <div class="table-content">
   <nz-card nzTitle="班级信息">
-    <div nz-card-grid [ngStyle]="gridStyle" *ngFor="let item of classList" (click)="toDashBoard(item.classId)">
+    <div
+      nz-card-grid
+      [ngStyle]="gridStyle"
+      *ngFor="let item of classList"
+      (click)="toDashBoard(item.classId)"
+    >
       <div>{{ item.classNumber }}</div>
       <p>班级人数: {{ item.membersCount }}</p>
     </div>
@@ -26,8 +41,7 @@
 </div>
 
 <div class="timeline">
-  <nz-timeline-item>张老师创建了 面向对象测试一 试卷 2019年3月27日</nz-timeline-item>
-  <nz-timeline-item>初步排除网络异常 2015-09-01</nz-timeline-item>
-  <nz-timeline-item>技术测试异常 2015-09-01</nz-timeline-item>
-  <nz-timeline-item>网络异常正在修复 2015-09-01</nz-timeline-item>
+  <nz-timeline-item *ngFor="let item of systemNoticeList">{{
+    item
+  }}</nz-timeline-item>
 </div>

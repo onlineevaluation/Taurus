@@ -19,12 +19,16 @@ export class HomeService {
   }
 
   /**
-   *
+   *  获取教师所带班级的学生总数
    * @param teacherId
    */
   getTeacherAllStudentCount(teacherId: number): Observable<Result> {
     return this.http.get<Result>(
       `${this.baseUrl}/students/teacher/${teacherId}`,
     );
+  }
+
+  getNotice(userId: number): Observable<Result> {
+    return this.http.get<Result>(`/notice/${userId}`);
   }
 }
