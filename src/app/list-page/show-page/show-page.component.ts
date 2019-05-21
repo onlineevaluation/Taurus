@@ -1,10 +1,11 @@
-import { PageClassParam } from "../../entity/Params";
-import { Result } from "src/app/entity/Result";
-import { ListPageService } from "../list-page.service";
-import { Component, OnInit } from "@angular/core";
-import { PaperInfo, TitleInfo } from "src/app/entity/Info";
-import { ActivatedRoute, Params } from "@angular/router";
-import { TeacherInfo } from "src/app/entity/TeacherInfo";
+import { PageClassParam } from '../../entity/Params';
+import { Result } from 'src/app/entity/Result';
+import { ListPageService } from '../list-page.service';
+import { Component, OnInit } from '@angular/core';
+import { PaperInfo, TitleInfo } from 'src/app/entity/Info';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { TeacherInfo } from 'src/app/entity/TeacherInfo';
+import { log } from 'util';
 
 @Component({
   selector: 'app-show-page',
@@ -12,14 +13,28 @@ import { TeacherInfo } from "src/app/entity/TeacherInfo";
   styleUrls: ['./show-page.component.less'],
 })
 export class ShowPageComponent implements OnInit {
+  isVisible = false;
+  isOkLoading = false;
+  classListOption: Array<{ label: string; value: number }> = [];
+  listOfOption: Array<{ label: string; value: string }> = [];
+  listOfSelectedValue = [];
+  pageId: number;
+  startTime: number;
+  endTime: number;
+  selectList: Array<TitleInfo> = [];
+  blankList: Array<TitleInfo> = [];
+  answerList: Array<TitleInfo> = [];
+  codeList: Array<TitleInfo> = [];
+  algorithmList: Array<TitleInfo> = [];
+  paperTitleInfo: PaperInfo = new PaperInfo();
+  listOfMin: Array<{ label: string; value: string }> = [];
+  listOfMinOptions: number = 0;
+  selectHours: number = 0;
   constructor(
     private listpageService: ListPageService,
     private routeInfo: ActivatedRoute,
   ) {}
-  isVisible = false;
-  isOkLoading = false;
 
-  pageId: number;
   ngOnInit() {
     this.routeInfo.params.subscribe((params: Params) => {
       this.pageId = params['pageId'];
@@ -36,15 +51,19 @@ export class ShowPageComponent implements OnInit {
     for (let i = 10; i < 36; i++) {
       children.push({ label: i.toString(36) + i, value: i.toString(36) + i });
     }
+
+    const minChildren: Array<{ label: string; value: string }> = [];
+    for (let i = 0; i < 60; i++) {
+      minChildren.push({
+        label: i < 10 ? '0' + i + '分钟' : i + '分钟',
+        value: i.toString(),
+      });
+    }
+
     this.listOfOption = children;
+    this.listOfMin = minChildren;
   }
 
-  selectList: Array<TitleInfo> = [];
-  blankList: Array<TitleInfo> = [];
-  answerList: Array<TitleInfo> = [];
-  codeList: Array<TitleInfo> = [];
-  algorithmList: Array<TitleInfo> = [];
-  paperTitleInfo: PaperInfo = new PaperInfo();
   setPaperTitleInfoParam(paperTitleParam: PaperInfo) {
     paperTitleParam.titles.forEach(title => {
       if (title.category == '1') {
@@ -95,6 +114,11 @@ export class ShowPageComponent implements OnInit {
     pageClassParam.startTime = this.startTime;
     pageClassParam.teacherId = this.teacherId;
     pageClassParam.pageId = this.pageId;
+    var min = this.listOfMinOptions;
+    var hours = this.selectHours;
+    var needTime = hours * 3600000 + min * 60000;
+    console.log('need time ', needTime);
+    pageClassParam.needTime = needTime;
     this.listpageService.postPaperClassPlan(pageClassParam).subscribe(
       (result: Result) => {
         console.log('data', result.data);
@@ -117,14 +141,14 @@ export class ShowPageComponent implements OnInit {
   onChange(result: Date): void {
     console.log('Selected Time: ', result);
   }
-  startTime: number;
-  endTime: number;
+
+  getNeedTime(value: Event) {
+    log(value + '');
+  }
+
   onOk(result: Date[]): void {
     console.log('onOk', result);
     this.startTime = result[0].getTime();
     this.endTime = result[1].getTime();
   }
-  classListOption: Array<{ label: string; value: number }> = [];
-  listOfOption: Array<{ label: string; value: string }> = [];
-  listOfSelectedValue = [];
 }

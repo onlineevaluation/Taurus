@@ -146,5 +146,36 @@
       (ngModelChange)="onChange($event)"
       (nzOnOk)="onOk($event)"
     ></nz-range-picker>
+    <br />
+    选择考试时长
+    <br />
+    <!-- 小时 -->
+    <nz-select
+      style="width: 120px;"
+      [(ngModel)]="selectHours"
+      nzAllowClear
+      nzPlaceHolder="请选择小时"
+    >
+      <nz-option nzValue="0" nzLabel="00小时"></nz-option>
+      <nz-option nzValue="1" nzLabel="01小时"></nz-option>
+      <nz-option nzValue="2" nzLabel="02小时"></nz-option>
+      <nz-option nzValue="3" nzLabel="03小时"></nz-option>
+      <nz-option nzValue="4" nzLabel="04小时"></nz-option>
+      <nz-option nzValue="5" nzLabel="05小时"></nz-option>
+      <nz-option nzValue="6" nzLabel="06小时"></nz-option>
+    </nz-select>
+    &nbsp;
+    <nz-select
+      style="width:  120px;"
+      [(ngModel)]="listOfMinOptions"
+      nzPlaceHolder="请选择分钟"
+    >
+      <nz-option
+        *ngFor="let option of listOfMin"
+        [nzLabel]="option.label"
+        [nzValue]="option.value"
+      >
+      </nz-option>
+    </nz-select>
   </div>
 </nz-modal>

@@ -39,4 +39,5 @@ export class PageClassParam {
   startTime: number;
   endTime: number;
   pageId: number;
+  needTime: number;
 }

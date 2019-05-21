@@ -7,6 +7,12 @@ import { Router } from '@angular/router';
 export class DashboardService {
   constructor(private http: HttpClient, private router: Router) {}
 
+  /**
+   * 获取班级前十名学生
+   * @param pageId
+   * @param classId
+   * @param teacherId
+   */
   getTop10Student(
     pageId: number,
     classId: number,
@@ -19,10 +25,19 @@ export class DashboardService {
 
     return this.http.get<Result>('/class/top10', { params: classAndPageParam });
   }
+  /**
+   * 获取该班级所有的学生
+   * @param classId
+   */
   getClassAllExamPage(classId: number): Observable<Result> {
     return this.http.get<Result>(`/page/exams/${classId}`);
   }
 
+  /**
+   * 获取成绩分析
+   * @param classId
+   * @param pageId
+   */
   getScoreAnalytics(classId: number, pageId: number): Observable<Result> {
     return this.http.get<Result>(`/class/classScore/${classId}/${pageId}`);
   }
@@ -31,6 +46,11 @@ export class DashboardService {
     return this.http.get<Result>(`/class/passed/${pageId}/${classId}`);
   }
 
+  /**
+   * 获取班级学生列表
+   * @param classId
+   * @param pageId
+   */
   getClassStudents(classId: number, pageId: number): Observable<Result> {
     return this.http.get<Result>(`/class/students/${classId}/${pageId}`);
   }
@@ -39,7 +59,7 @@ export class DashboardService {
     return this.http.get<Result>(`/exam/class/${classId}/${pageId}`);
   }
 
-  getErrorInfo(classId:number,pageId:number):Observable<Result> {
-    return this.http.get<Result>(`/exam/error/${classId}/${pageId}`)
+  getErrorInfo(classId: number, pageId: number): Observable<Result> {
+    return this.http.get<Result>(`/exam/error/${classId}/${pageId}`);
   }
 }

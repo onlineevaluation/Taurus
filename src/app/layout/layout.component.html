@@ -38,7 +38,20 @@
     </ul>
   </nz-sider>
   <nz-layout class="main-layout">
-    <nz-header style="background: #fff; padding:0;">1</nz-header>
+    <nz-header class="layout-header">
+      <div class="blank-div"></div>
+      <div class="avatar">
+        <nz-avatar
+          [nzText]="text"
+          nzSize="large"
+          [ngStyle]="{ 'background-color': color }"
+          style="vertical-align: middle;"
+        ></nz-avatar>
+      </div>
+      <div class="logout">
+        <button nz-button nzType="dashed" (click)="logout()">注销</button>
+      </div>
+    </nz-header>
     <nz-content style="margin:0 16px;">
       <nz-breadcrumb style="margin:16px 0;" [nzAutoGenerate]="true">
       </nz-breadcrumb>
@@ -48,7 +61,7 @@
       </div>
     </nz-content>
     <nz-footer style="text-align: center;">
-      ©2019 中北大学&nbsp;软件学院
+      ©2019 中北大学&nbsp;软件学院&nbsp;关于
     </nz-footer>
   </nz-layout>
 </nz-layout>

@@ -21,17 +21,17 @@ export class DashboardComponent implements OnInit {
   passedRate: number;
   top10List: Array<StudentAndScoreInfo> = [];
   studentScoreTableList: Array<StudentAndScoreInfo> = [];
+  classId: number;
+  selected: string;
+  classAndPageIdSelected: number;
+  menuitems: Array<ExamInfo> = [];
+  pageId: number;
 
   constructor(
     private router: Router,
     private routeInfo: ActivatedRoute,
     private dashboardService: DashboardService,
   ) {}
-
-  classId: number;
-  selected: string;
-  menuitems: Array<ExamInfo> = [];
-  pageId: number;
 
   /**
    * 柱状图渲染
@@ -63,6 +63,7 @@ export class DashboardComponent implements OnInit {
       },
       error => {},
       () => {
+        this.classAndPageIdSelected = this.menuitems[0].id;
         this.selected = this.menuitems[0].pageTitle;
         this.pageId = this.menuitems[0].pageId;
         // 发起获取其他的请求
@@ -86,6 +87,7 @@ export class DashboardComponent implements OnInit {
 
   selectChange(item: ExamInfo) {
     this.selected = item.pageTitle;
+    this.classAndPageIdSelected = item.id;
     this.pageId = item.pageId;
     this.getPageInfo(item.pageId, item.classId, this.teacherInfo.identity);
     this.getScoreAnalytics(item.classId, item.pageId);
